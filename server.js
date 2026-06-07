@@ -219,7 +219,7 @@ app.get('/hero', (req, res) => {
 
 // Start Server
 app.listen(PORT, () => {
-    console.log(`✅ PortfolioAI Backend Server running on http://localhost:${PORT}`);
+    console.log(`✅ PortfolioAI Backend Server running on http://localhost:${10000}`);
     console.log(`📝 API Documentation:`);
     console.log(`   POST /api/auth/register - Register new user`);
     console.log(`   POST /api/auth/login - Login user`);
