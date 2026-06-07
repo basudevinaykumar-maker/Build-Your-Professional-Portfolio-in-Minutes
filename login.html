@@ -239,7 +239,7 @@
         <div class="error-message" id="errorMessage"></div>
         <div class="success-message" id="successMessage"></div>
 
-        <!-- Google Login Section -->
+
         <div class="google-login-section">
             <button type="button" class="google-btn" onclick="loginWithGoogle()">
                 <svg class="google-icon" viewBox="0 0 24 24" fill="currentColor">
@@ -286,14 +286,14 @@
         const errorMessage = document.getElementById('errorMessage');
         const successMessage = document.getElementById('successMessage');
 
-        // Check if user is already logged in
+
         window.addEventListener('load', () => {
             const token = localStorage.getItem('authToken');
             if (token) {
                 verifyTokenAndRedirect();
             }
             
-            // Pre-fill remembered email if exists
+
             const rememberedEmail = localStorage.getItem('rememberUser');
             if (rememberedEmail) {
                 document.getElementById('email').value = rememberedEmail;
@@ -346,7 +346,7 @@
                 const data = await response.json();
 
                 if (response.ok) {
-                    // Store token and user info
+
                     localStorage.setItem('authToken', data.token);
                     localStorage.setItem('userEmail', data.user.email);
                     localStorage.setItem('userName', data.user.fullname);
@@ -383,13 +383,13 @@
             errorMessage.style.display = 'none';
         }
 
-        // Social login handlers (placeholder functions)
+
         function loginWithGoogle() {
-            alert('Google login functionality will be implemented with backend');
+            alert('Google login functionality will be implemented soon ,please continue with gmail');
         }
 
         function loginWithGitHub() {
-            alert('GitHub login functionality will be implemented with backend');
+            alert('GitHub login functionality will be implemented soon!');
         }
     </script>
 </body>
