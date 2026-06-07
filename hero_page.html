@@ -18,7 +18,7 @@ body{
     background: #f0f4f8;
 }
 
-/* Header Styles */
+
 header{
     background: linear-gradient(135deg, #0077ff 0%, #005cbf 100%);
     color:white;
@@ -194,7 +194,7 @@ nav a:hover {
     transform: translateY(-3px);
 }
 
-/* Steps Section */
+
 .steps-section {
     background: white;
     padding: 80px 20px;
@@ -238,7 +238,7 @@ nav a:hover {
     line-height: 1.6;
 }
 
-/* Features Section */
+
 .features-section {
     background: linear-gradient(135deg, #f5f7fa 0%, #ffffff 100%);
     padding: 80px 20px;
@@ -288,7 +288,7 @@ nav a:hover {
     line-height: 1.6;
 }
 
-/* How It Works */
+
 .howit-section {
     background: linear-gradient(135deg, #0077ff 0%, #00bfff 100%);
     color: white;
@@ -334,7 +334,7 @@ nav a:hover {
     opacity: 0.9;
 }
 
-/* Tools Grid */
+
 .tools-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -400,7 +400,7 @@ nav a:hover {
     margin:auto;
 }
 
-/* Section Base */
+
 section {
     padding: 60px 20px;
 }
@@ -472,7 +472,7 @@ footer{
     margin-top: 60px;
 }
 
-/* Responsive */
+
 @media (max-width: 768px) {
     .hero-section h1 {
         font-size: 2.2rem;
@@ -560,7 +560,7 @@ footer{
     </div>
 </section>
 
-<!-- Steps Section -->
+
 <section class="steps-section">
     <div class="container">
         <h2>Build Your Portfolio in 4 Simple Steps</h2>
@@ -589,7 +589,7 @@ footer{
     </div>
 </section>
 
-<!-- How It Works -->
+
 <section class="howit-section" id="features">
     <h2>Why Choose PortfolioAI?</h2>
     <div class="howit-steps">
@@ -626,7 +626,6 @@ footer{
     </div>
 </section>
 
-<!-- Tools Section -->
 <section id="tools">
     <div class="container">
         <h2>🚀 AI-Powered Tools</h2>
@@ -678,7 +677,7 @@ footer{
     </div>
 </section>
 
-<!-- Contact Section -->
+
 <section id="contact">
     <div class="container">
         <h2>📞 Get in Touch</h2>
@@ -708,19 +707,19 @@ footer{
 <script>
     const API_URL = 'http://localhost:5000';
 
-    // Check if user is logged in
+
     window.addEventListener('load', () => {
         const token = localStorage.getItem('authToken');
         const userEmail = localStorage.getItem('userEmail');
         const userName = localStorage.getItem('userName');
 
         if (!token) {
-            // Redirect to login page if not logged in
+
             window.location.href = 'login.html';
         } else {
-            // Verify token with backend
+
             verifyTokenWithBackend(token);
-            // Display user email/name in header
+
             document.getElementById('userEmail').textContent = userName || userEmail || 'User';
         }
     });
@@ -746,13 +745,13 @@ footer{
     }
 
     function logout() {
-        // Clear user data from localStorage
+
         localStorage.removeItem('authToken');
         localStorage.removeItem('userEmail');
         localStorage.removeItem('userName');
         localStorage.removeItem('rememberUser');
         
-        // Call backend logout endpoint (optional)
+
         fetch(`${API_URL}/api/auth/logout`, {
             method: 'POST',
             headers: {
@@ -761,7 +760,7 @@ footer{
         })
         .catch(err => console.log('Logout API call failed:', err))
         .finally(() => {
-            // Redirect to login page
+
             window.location.href = 'login.html';
         });
     }
@@ -783,7 +782,7 @@ footer{
         }
     }
 
-    // Smooth scrolling for navigation links
+ 
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -797,7 +796,7 @@ footer{
         });
     });
 
-    // Contact form submission
+
     document.querySelector('.contact-form').addEventListener('submit', function(e) {
         e.preventDefault();
         alert('Thank you for your message! We will get back to you soon.');
