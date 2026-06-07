@@ -241,7 +241,7 @@
         <div class="error-message" id="errorMessage"></div>
         <div class="success-message" id="successMessage"></div>
 
-        <!-- Google Login Section -->
+  
         <div class="google-login-section">
             <button type="button" class="google-btn" onclick="signupWithGoogle()">
                 <svg class="google-icon" viewBox="0 0 24 24" fill="currentColor">
@@ -299,7 +299,7 @@
         const errorMessage = document.getElementById('errorMessage');
         const successMessage = document.getElementById('successMessage');
 
-        // Check if user is already logged in
+
         window.addEventListener('load', () => {
             const token = localStorage.getItem('authToken');
             if (token) {
@@ -338,7 +338,7 @@
             const confirmPassword = document.getElementById('confirmPassword').value;
             const termsAccepted = document.getElementById('terms').checked;
 
-            // Validate form
+
             if (!fullname || !email || !password || !confirmPassword || !termsAccepted) {
                 showError('Please fill all fields and accept the terms');
                 return;
@@ -421,7 +421,6 @@
             }
         }
 
-        // Google signup handler (placeholder function)
         function signupWithGoogle() {
             alert('Google signup functionality will be implemented with backend');
         }
