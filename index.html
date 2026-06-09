@@ -704,7 +704,7 @@ footer{
 </footer>
 
 <script>
-    const API_URL = 'https://build-your-professional-portfolio-in.onrender.com/';
+    const API_URL = window.location.origin.includes('file://') ? 'http://localhost:5000' : window.location.origin;
 
 
     window.addEventListener('load', () => {

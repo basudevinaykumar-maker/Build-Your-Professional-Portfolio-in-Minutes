@@ -7,7 +7,7 @@ const path = require('path');
 require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = parseInt(process.env.PORT || 5000, 10);
 const JWT_SECRET = process.env.JWT_SECRET || 'your_secret_key_change_in_production';
 
 // Middleware
@@ -214,19 +214,32 @@ app.get('/signup', (req, res) => {
 });
 
 app.get('/hero', (req, res) => {
-    res.sendFile(path.join(__dirname, 'hero_page.html'));
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // Start Server
-app.listen(PORT, () => {
-    console.log(`✅ PortfolioAI Backend Server running on http://localhost:${PORT}`);
-    console.log(`📝 API Documentation:`);
-    console.log(`   POST /api/auth/register - Register new user`);
-    console.log(`   POST /api/auth/login - Login user`);
-    console.log(`   GET /api/auth/profile - Get user profile (requires token)`);
-    console.log(`   GET /api/auth/verify - Verify token`);
-    console.log(`   POST /api/auth/logout - Logout user`);
-});
+const startServer = (port) => {
+    const server = app.listen(port, () => {
+        console.log(`✅ PortfolioAI Backend Server running on http://localhost:${port}`);
+        console.log(`📝 API Documentation:`);
+        console.log(`   POST /api/auth/register - Register new user`);
+        console.log(`   POST /api/auth/login - Login user`);
+        console.log(`   GET /api/auth/profile - Get user profile (requires token)`);
+        console.log(`   GET /api/auth/verify - Verify token`);
+        console.log(`   POST /api/auth/logout - Logout user`);
+    });
+
+    server.on('error', (err) => {
+        if (err.code === 'EADDRINUSE') {
+            console.log(`⚠️ Port ${port} is in use. Trying port ${port + 1}...`);
+            startServer(port + 1);
+        } else {
+            console.error('Server error:', err);
+        }
+    });
+};
+
+startServer(PORT);
 
 // Handle server errors
 process.on('unhandledRejection', (err) => {

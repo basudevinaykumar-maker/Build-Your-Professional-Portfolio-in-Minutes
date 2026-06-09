@@ -281,7 +281,7 @@
     </div>
 
     <script>
-        const API_URL = 'http://localhost:5000';
+        const API_URL = window.location.origin.includes('file://') ? 'http://localhost:5000' : window.location.origin;
         const loginForm = document.getElementById('loginForm');
         const errorMessage = document.getElementById('errorMessage');
         const successMessage = document.getElementById('successMessage');
@@ -314,7 +314,7 @@
             .then(response => response.json())
             .then(data => {
                 if (data.user) {
-                    window.location.href = 'hero_page.html';
+                    window.location.href = 'index.html';
                 }
             })
             .catch(err => {
@@ -366,7 +366,7 @@
                     document.getElementById('password').value = '';
                 }
             } catch (error) {
-                showError('Connection error. Make sure the backend server is running on http://localhost:5000');
+                showError(`Connection error. Make sure the backend server is running on ${API_URL}`);
                 console.error('Error:', error);
             }
         });

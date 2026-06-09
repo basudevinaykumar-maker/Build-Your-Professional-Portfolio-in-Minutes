@@ -294,7 +294,7 @@
     </div>
 
     <script>
-        const API_URL = 'http://localhost:5000';
+        const API_URL = window.location.origin.includes('file://') ? 'http://localhost:5000' : window.location.origin;
         const signupForm = document.getElementById('signupForm');
         const errorMessage = document.getElementById('errorMessage');
         const successMessage = document.getElementById('successMessage');
@@ -320,7 +320,7 @@
             .then(response => response.json())
             .then(data => {
                 if (data.user) {
-                    window.location.href = 'hero_page.html';
+                    window.location.href = 'index.html';
                 }
             })
             .catch(err => {
@@ -380,7 +380,7 @@
                     showError(data.message || 'Error creating account. Please try again.');
                 }
             } catch (error) {
-                showError('Connection error. Make sure the backend server is running on http://localhost:5000');
+                showError(`Connection error. Make sure the backend server is running on ${API_URL}`);
                 console.error('Error:', error);
             }
         });
