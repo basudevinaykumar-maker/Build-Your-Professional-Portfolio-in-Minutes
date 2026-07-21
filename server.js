@@ -220,7 +220,7 @@ app.get('/hero', (req, res) => {
 // Start Server
 const startServer = (port) => {
     const server = app.listen(port, () => {
-        console.log(`✅ PortfolioAI Backend Server running on http://localhost:${port}`);
+        console.log(`✅ PortfolioAI Backend Server running on http://localhost:${10000}`);
         console.log(`📝 API Documentation:`);
         console.log(`   POST /api/auth/register - Register new user`);
         console.log(`   POST /api/auth/login - Login user`);
