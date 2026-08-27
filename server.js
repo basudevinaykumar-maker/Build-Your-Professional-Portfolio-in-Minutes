@@ -220,21 +220,21 @@ app.get('/hero', (req, res) => {
 // Start Server
 const startServer = (port) => {
     const server = app.listen(port, () => {
-        console.log(`✅ PortfolioAI Backend Server running on http://localhost:${10000}`);
+        console.log(`✅ PortfolioAI Backend Server running on http://localhost:${port}`);
         console.log(`📝 API Documentation:`);
-        console.log(`   POST /api/auth/register - Register new user`);
-        console.log(`   POST /api/auth/login - Login user`);
-        console.log(`   GET /api/auth/profile - Get user profile (requires token)`);
-        console.log(`   GET /api/auth/verify - Verify token`);
-        console.log(`   POST /api/auth/logout - Logout user`);
+        console.log(`   POST /api/auth/register`);
+        console.log(`   POST /api/auth/login`);
+        console.log(`   GET /api/auth/profile`);
+        console.log(`   GET /api/auth/verify`);
+        console.log(`   POST /api/auth/logout`);
     });
 
     server.on('error', (err) => {
         if (err.code === 'EADDRINUSE') {
-            console.log(`⚠️ Port ${port} is in use. Trying port ${port + 1}...`);
+            console.log(`⚠️ Port ${port} is in use. Trying ${port + 1}...`);
             startServer(port + 1);
         } else {
-            console.error('Server error:', err);
+            console.error(err);
         }
     });
 };
