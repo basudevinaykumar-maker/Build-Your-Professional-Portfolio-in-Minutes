@@ -1,15 +1,9 @@
-<<<<<<< HEAD
+
 node_modules/
 users.db
 .env
 .DS_Store
 *.log
 npm-debug.log*
-=======
-node_modules/
-users.db
-.env
-.DS_Store
-*.log
-npm-debug.log*
->>>>>>> 0cb7fd533fff23beb569350e585f722e38d9d4fb
+
+
