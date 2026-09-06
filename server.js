@@ -203,6 +203,11 @@ app.post('/api/auth/logout', (req, res) => {
 app.get('/api/health', (req, res) => {
     res.json({ message: 'Backend server is running', status: 'OK' });
 });
+app.get("/", (req, res) => {
+  res.json({
+    message: "PortfolioAI Backend is Live 🚀"
+  });
+});
 
 // Serve HTML files
 app.get('/login', (req, res) => {
