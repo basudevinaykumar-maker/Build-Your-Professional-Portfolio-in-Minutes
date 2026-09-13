@@ -541,6 +541,7 @@ footer{
         <div>
             <a href="#home">Home</a>
             <a href="#tools">Tools</a>
+            <a href="resume-builder.html">Resume Builder</a>
             <a href="#templates">Templates</a>
             <a href="#contact">Contact</a>
         </div>
@@ -642,18 +643,18 @@ footer{
                 <button class="tool-btn" onclick="launchTool('portfolio')">Start Now</button>
             </div>
 
-            <div class="tool-card">
+            <div class="tool-card" onclick="launchTool('resume')">
                 <span class="tool-emoji">📄</span>
                 <h3>Resume Builder</h3>
-                <p>Generate professional resumes with AI suggestions</p>
-                <button class="tool-btn" onclick="alert('🚀 Resume Builder - Coming Soon!')">Coming Soon</button>
+                <p>Generate professional ATS resumes & export PDF/DOCX</p>
+                <button class="tool-btn" onclick="event.stopPropagation(); launchTool('resume')">Start Now</button>
             </div>
 
-            <div class="tool-card">
+            <div class="tool-card" onclick="launchTool('linkedin')">
                 <span class="tool-emoji">💼</span>
                 <h3>LinkedIn Optimizer</h3>
                 <p>Improve your LinkedIn profile with AI-powered tips</p>
-                <button class="tool-btn" onclick="alert('🚀 LinkedIn Optimizer - Coming Soon!')">Coming Soon</button>
+                <button class="tool-btn" onclick="event.stopPropagation(); launchTool('linkedin')">Optimize Profile</button>
             </div>
 
             <div class="tool-card">
@@ -772,13 +773,13 @@ footer{
         const toolUrls = {
             'portfolio': 'portfolio-generator.html',
             'resume': 'resume-builder.html',
-            'linkedin': 'linkedin-optimizer.html',
+            'linkedin': 'resume-builder.html#linkedin',
             'career': 'career-guidance.html',
             'skills': 'skill-analyzer.html',
             'content': 'content-suggestions.html'
         };
 
-        if (toolName === 'portfolio') {
+        if (toolName === 'portfolio' || toolName === 'resume' || toolName === 'linkedin') {
             window.location.href = toolUrls[toolName];
         } else {
             alert(`🚀 ${toolName.toUpperCase()} Tool - Coming Soon!\n\nThis feature is currently under development and will be available shortly.`);

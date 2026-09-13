@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ResumeAI Pro — PortfolioAI Resume Builder</title>
+  <link rel="stylesheet" href="resume-styles.css">
+</head>
+<body>
+
+  <!-- App Header -->
+  <header class="app-header">
+    <div class="logo-group">
+      <!-- Back to Dashboard button -->
+      <a href="hero_page.html" class="btn btn-secondary btn-sm" style="text-decoration:none;" title="Return to PortfolioAI Dashboard">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        Dashboard
+      </a>
+
+      <div class="logo-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <h1>ResumeAI Pro</h1>
+        <p>ATS Resume Writer & LinkedIn Optimization Suite</p>
+      </div>
+      <div class="header-badges">
+        <span class="badge badge-ats">100% ATS Verified</span>
+        <span class="badge badge-ai">Ivy League / Wall St Standard</span>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <button class="btn btn-secondary btn-sm" id="btnLoadSample" title="Pre-fill form with a world-class senior engineer profile">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+        Load Sample Profile
+      </button>
+      <button class="btn btn-outline btn-sm" id="btnClearForm" title="Reset all form fields">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 6h18"></path>
+          <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+          <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+        </svg>
+        Clear
+      </button>
+    </div>
+  </header>
+
+  <!-- App Main Dual-Pane Grid -->
+  <div class="app-container">
+
+    <!-- LEFT PANE: 6-STEP WIZARD FORM -->
+    <div class="form-pane">
+      <!-- Wizard Navigation Bar -->
+      <div class="step-wizard-bar" id="wizardTabs">
+        <div class="step-tab active" data-step="1">
+          <span class="step-num">1</span>
+          <span>Personal</span>
+        </div>
+        <div class="step-tab" data-step="2">
+          <span class="step-num">2</span>
+          <span>Summary</span>
+        </div>
+        <div class="step-tab" data-step="3">
+          <span class="step-num">3</span>
+          <span>Skills</span>
+        </div>
+        <div class="step-tab" data-step="4">
+          <span class="step-num">4</span>
+          <span>Experience & Projects</span>
+        </div>
+        <div class="step-tab" data-step="5">
+          <span class="step-num">5</span>
+          <span>Certifications</span>
+        </div>
+        <div class="step-tab" data-step="6">
+          <span class="step-num">6</span>
+          <span>Education</span>
+        </div>
+      </div>
+
+      <!-- Form Content -->
+      <div class="form-content">
+
+        <!-- STEP 1: PERSONAL DETAILS -->
+        <div class="step-panel active" id="step1">
+          <div class="step-header">
+            <h2>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              Step 1 — Personal Details
+            </h2>
+            <p>Enter your contact details and target job role for ATS alignment.</p>
+          </div>
+
+          <div class="form-group">
+            <label for="fullName">Full Name *</label>
+            <input type="text" id="fullName" class="form-control" placeholder="e.g. Alexander R. Morgan" required>
+          </div>
+
+          <div class="form-group">
+            <label for="targetRole">Target Job Role *</label>
+            <input type="text" id="targetRole" class="form-control" placeholder="e.g. Senior Full Stack Engineer / AI Specialist" required>
+            <p class="input-hint">Keywords in your resume and LinkedIn will be optimized for this role.</p>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email">Email Address *</label>
+              <input type="email" id="email" class="form-control" placeholder="alex.morgan@example.com" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number *</label>
+              <input type="tel" id="phone" class="form-control" placeholder="+1 (555) 382-9104" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="location">Location *</label>
+            <input type="text" id="location" class="form-control" placeholder="San Francisco, CA (or Remote)" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="linkedinUrl">LinkedIn URL <span class="opt">(optional)</span></label>
+              <input type="text" id="linkedinUrl" class="form-control" placeholder="linkedin.com/in/alexandermorgan">
+            </div>
+            <div class="form-group">
+              <label for="githubUrl">GitHub / Portfolio <span class="opt">(optional)</span></label>
+              <input type="text" id="githubUrl" class="form-control" placeholder="github.com/alexmorgan">
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 2: PROFESSIONAL SUMMARY -->
+        <div class="step-panel" id="step2">
+          <div class="step-header">
+            <h2>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="12 8 8 12 12 16 12 8"></polygon></svg>
+              Step 2 — Professional Summary
+            </h2>
+            <p>Define your career focus, specialization, and key value proposition.</p>
+          </div>
+
+          <div class="form-group">
+            <label for="careerObjective">Career Objective & Core Value *</label>
+            <textarea id="careerObjective" class="form-control" rows="4" placeholder="Briefly describe your career trajectory, core strengths, and what you bring to target employers..."></textarea>
+            <p class="input-hint">Will be polished with ATS action verbs and recruiter keywords.</p>
+          </div>
+
+          <div class="form-group">
+            <label for="yearsExperience">Years of Experience <span class="opt">(optional)</span></label>
+            <input type="text" id="yearsExperience" class="form-control" placeholder="e.g. 6+ years">
+          </div>
+
+          <div class="form-group">
+            <label for="interests">Key Technical Interests & Focus Areas</label>
+            <input type="text" id="interests" class="form-control" placeholder="e.g. Distributed Systems, Large Language Models, Cloud Native Infrastructure">
+          </div>
+        </div>
+
+        <!-- STEP 3: SKILLS -->
+        <div class="step-panel" id="step3">
+          <div class="step-header">
+            <h2>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              Step 3 — Skills & Competencies
+            </h2>
+            <p>Organize your skills into structured categories for ATS scanners.</p>
+          </div>
+
+          <div class="form-group">
+            <label for="techSkills">Technical Skills *</label>
+            <input type="text" id="techSkills" class="form-control" placeholder="Python, TypeScript, Go, React, Next.js, Node.js, FastAPI, PostgreSQL">
+            <p class="input-hint">Separate with commas. Hard skills scanned by ATS engines.</p>
+          </div>
+
+          <div class="form-group">
+            <label for="toolsTech">Tools & Technologies *</label>
+            <input type="text" id="toolsTech" class="form-control" placeholder="Docker, Kubernetes, AWS (ECS, Lambda, S3), Terraform, Git, CI/CD, Redis, Kafka">
+          </div>
+
+          <div class="form-group">
+            <label for="softSkills">Soft Skills *</label>
+            <input type="text" id="softSkills" class="form-control" placeholder="Cross-Functional Leadership, Agile/Scrum, System Design, Code Review, Mentorship">
+          </div>
+
+          <div class="form-group">
+            <label for="languages">Languages</label>
+            <input type="text" id="languages" class="form-control" placeholder="English (Native/Bilingual), Spanish (Professional Working)">
+          </div>
+        </div>
+
+        <!-- STEP 4: EXPERIENCE & PROJECTS -->
+        <div class="step-panel" id="step4">
+          <div class="step-header">
+            <h2>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+              Step 4 — Experience & Projects
+            </h2>
+            <p>Add your employment history and standout technical projects.</p>
+          </div>
+
+          <!-- Experience Section -->
+          <div style="margin-bottom: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+              <h3 style="font-size: 0.9rem; font-weight: 700; color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.05em;">Work Experience</h3>
+            </div>
+            <div id="experienceContainer">
+              <!-- Dynamically rendered experience items -->
+            </div>
+            <button type="button" class="btn-add-item" id="btnAddExperience">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              Add Work Experience
+            </button>
+          </div>
+
+          <!-- Projects Section -->
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+              <h3 style="font-size: 0.9rem; font-weight: 700; color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.05em;">Key Technical Projects</h3>
+            </div>
+            <div id="projectsContainer">
+              <!-- Dynamically rendered project items -->
+            </div>
+            <button type="button" class="btn-add-item" id="btnAddProject">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              Add Project
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 5: CERTIFICATIONS & ACHIEVEMENTS -->
+        <div class="step-panel" id="step5">
+          <div class="step-header">
+            <h2>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+              Step 5 — Certifications & Achievements
+            </h2>
+            <p>Accreditations, awards, hackathons, and published work.</p>
+          </div>
+
+          <div class="form-group">
+            <label for="certifications">Professional Certifications</label>
+            <textarea id="certifications" class="form-control" rows="3" placeholder="e.g. AWS Certified Solutions Architect – Associate (2024)&#10;Google Cloud Professional Data Engineer (2023)"></textarea>
+            <p class="input-hint">Enter one certification per line with issuing organization & year.</p>
+          </div>
+
+          <div class="form-group">
+            <label for="awards">Honors & Awards</label>
+            <textarea id="awards" class="form-control" rows="3" placeholder="e.g. Employee of the Year (Q4 2023) — Selected out of 250+ engineers for cloud cost optimization&#10;President's Honor Roll — Top 3% of graduating class"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="hackathons">Hackathons & Competitions</label>
+            <textarea id="hackathons" class="form-control" rows="2" placeholder="e.g. 1st Place Winner — Global AI Hackathon 2023 (Developed RAG search engine over 100k docs)"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="publications">Publications <span class="opt">(optional)</span></label>
+            <textarea id="publications" class="form-control" rows="2" placeholder="e.g. 'Optimizing Latency in Distributed Vector Databases' — IEEE Software Track, 2023"></textarea>
+          </div>
+        </div>
+
+        <!-- STEP 6: EDUCATION -->
+        <div class="step-panel" id="step6">
+          <div class="step-header">
+            <h2>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+              Step 6 — Education
+            </h2>
+            <p>Degrees, universities, GPA/CGPA, and graduation timelines.</p>
+          </div>
+
+          <div id="educationContainer">
+            <!-- Dynamically rendered education items -->
+          </div>
+
+          <button type="button" class="btn-add-item" id="btnAddEducation">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Add Education
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Wizard Navigation Footer -->
+      <div class="form-footer">
+        <button class="btn btn-secondary" id="btnPrevStep" disabled>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          Previous
+        </button>
+        <button class="btn btn-primary" id="btnNextStep">
+          <span>Next Step</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- RIGHT DISPLAY PANE: LIVE RESUME, LINKEDIN & ATS VIEWS -->
+    <div class="display-pane">
+
+      <!-- Top Action Bar & Tabs -->
+      <div class="pane-top-bar">
+        <!-- View Switcher Tabs -->
+        <div class="view-tabs">
+          <button class="view-tab active" data-view="resume">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+            ATS Resume Preview
+          </button>
+          <button class="view-tab" data-view="linkedin">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+            LinkedIn Optimization
+          </button>
+          <button class="view-tab" data-view="ats">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            ATS Score Analysis
+          </button>
+        </div>
+
+        <!-- Export Action Buttons -->
+        <div class="export-toolbar">
+          <button class="btn btn-outline btn-sm" id="btnToggleEdit" title="Edit directly on the preview sheet">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+            <span id="btnEditText">Edit Resume</span>
+          </button>
+          <button class="btn btn-secondary btn-sm" id="btnPrintResume" title="Open native print dialog">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            Print
+          </button>
+          <button class="btn btn-primary btn-sm" id="btnDownloadDocx" title="Download pure Microsoft Word .docx document">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+            Download DOCX
+          </button>
+          <button class="btn btn-success btn-sm" id="btnDownloadPdf" title="Download exact A4 ATS PDF with preserved layout and icons">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Download PDF
+          </button>
+        </div>
+      </div>
+
+      <!-- VIEW 1: RESUME PREVIEW (A4 ATS TIMES NEW ROMAN) -->
+      <div class="view-container active" id="viewResume">
+        <div class="edit-badge-banner" id="editBadgeBanner">
+          ✏️ <strong>Live In-Place Edit Mode Active:</strong> You can click and directly edit any text on the resume sheet below before exporting!
+        </div>
+
+        <div class="resume-paper-wrapper">
+          <!-- The exact A4 ATS Resume Container -->
+          <div class="a4-sheet" id="resumeSheet">
+            
+            <!-- 1. Centered Full Name -->
+            <header class="resume-header">
+              <div class="resume-name" id="previewName">ALEXANDER R. MORGAN</div>
+              
+              <!-- 2. Contact Row with Clean Icons -->
+              <div class="resume-contact-row" id="previewContactRow">
+                <!-- Injected dynamically with SVG icons -->
+              </div>
+            </header>
+
+            <!-- 3. Career Summary -->
+            <section class="resume-section" id="sectionSummary">
+              <div class="section-title">PROFESSIONAL SUMMARY</div>
+              <div class="resume-summary-text" id="previewSummary"></div>
+            </section>
+
+            <!-- 4. Skills (Categorized without tables) -->
+            <section class="resume-section" id="sectionSkills">
+              <div class="section-title">SKILLS & COMPETENCIES</div>
+              <div class="skills-block" id="previewSkills"></div>
+            </section>
+
+            <!-- 5. Experience -->
+            <section class="resume-section" id="sectionExperience">
+              <div class="section-title">PROFESSIONAL EXPERIENCE</div>
+              <div id="previewExperience"></div>
+            </section>
+
+            <!-- 6. Projects -->
+            <section class="resume-section" id="sectionProjects">
+              <div class="section-title">KEY TECHNICAL PROJECTS</div>
+              <div id="previewProjects"></div>
+            </section>
+
+            <!-- 7. Awards & Certifications -->
+            <section class="resume-section" id="sectionCertifications">
+              <div class="section-title">AWARDS & CERTIFICATIONS</div>
+              <ul class="cert-list" id="previewCertifications"></ul>
+            </section>
+
+            <!-- 8. Education -->
+            <section class="resume-section" id="sectionEducation">
+              <div class="section-title">EDUCATION</div>
+              <div id="previewEducation"></div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 2: LINKEDIN OPTIMIZATION -->
+      <div class="view-container" id="viewLinkedin">
+        <div class="linkedin-container">
+          
+          <!-- LinkedIn Score Banner -->
+          <div class="linkedin-score-banner">
+            <div class="score-main">
+              <div class="score-circle">
+                <span class="val" id="liOverallScore">96</span>
+                <span class="sub">Score</span>
+              </div>
+              <div>
+                <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.2rem;">LinkedIn Profile Strength</h3>
+                <p style="font-size: 0.82rem; opacity: 0.9;">Ranked in top 2% for recruiter discoverability</p>
+              </div>
+            </div>
+
+            <div class="score-breakdown-grid">
+              <div class="score-mini-card">
+                <div class="name">Headline</div>
+                <div class="val" id="scoreHeadline">98%</div>
+              </div>
+              <div class="score-mini-card">
+                <div class="name">About</div>
+                <div class="val" id="scoreAbout">95%</div>
+              </div>
+              <div class="score-mini-card">
+                <div class="name">Experience</div>
+                <div class="val" id="scoreExp">94%</div>
+              </div>
+              <div class="score-mini-card">
+                <div class="name">Skills</div>
+                <div class="val" id="scoreSkills">96%</div>
+              </div>
+              <div class="score-mini-card">
+                <div class="name">Keywords</div>
+                <div class="val" id="scoreKw">97%</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section: 3 LinkedIn Headlines -->
+          <div class="li-card">
+            <div class="li-card-header">
+              <div class="li-card-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                3 High-Converting LinkedIn Headlines
+              </div>
+            </div>
+
+            <div class="headline-option">
+              <span class="headline-badge">Option 1 — Direct & Search-Optimized (Recommended)</span>
+              <p class="headline-text" id="liHeadline1"></p>
+              <button class="copy-mini-btn" onclick="copyTextFromElement('liHeadline1')">Copy</button>
+            </div>
+
+            <div class="headline-option">
+              <span class="headline-badge">Option 2 — Value-Proposition & Business Impact</span>
+              <p class="headline-text" id="liHeadline2"></p>
+              <button class="copy-mini-btn" onclick="copyTextFromElement('liHeadline2')">Copy</button>
+            </div>
+
+            <div class="headline-option">
+              <span class="headline-badge">Option 3 — Specialized Domain Authority</span>
+              <p class="headline-text" id="liHeadline3"></p>
+              <button class="copy-mini-btn" onclick="copyTextFromElement('liHeadline3')">Copy</button>
+            </div>
+          </div>
+
+          <!-- Section: SEO Optimized About -->
+          <div class="li-card">
+            <div class="li-card-header">
+              <div class="li-card-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                SEO-Optimized LinkedIn About Section
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="copyTextFromElement('liAboutText')">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy About
+              </button>
+            </div>
+            <div class="li-about-box" id="liAboutText"></div>
+          </div>
+
+          <!-- Section: STAR Format Experience -->
+          <div class="li-card">
+            <div class="li-card-header">
+              <div class="li-card-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                STAR Format Experience (Situation • Task • Action • Result)
+              </div>
+            </div>
+            <div id="liStarContainer"></div>
+          </div>
+
+          <!-- Section: Top Recruiter Keywords & Missing Keywords -->
+          <div class="li-card">
+            <div class="li-card-header">
+              <div class="li-card-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                Keyword Strategy for Recruiter Algorithms
+              </div>
+            </div>
+
+            <div style="margin-bottom: 1rem;">
+              <h4 style="font-size: 0.8rem; font-weight: 700; color: #93c5fd; text-transform: uppercase;">Top Recruiter Keywords (Present in Your Profile)</h4>
+              <div class="keyword-pills" id="liTopKeywords"></div>
+            </div>
+
+            <div>
+              <h4 style="font-size: 0.8rem; font-weight: 700; color: #fcd34d; text-transform: uppercase;">Recommended Keywords to Add (Missing from Target Role)</h4>
+              <div class="keyword-pills" id="liMissingKeywords"></div>
+            </div>
+          </div>
+
+          <!-- Section: Banner Recommendation & Custom URL -->
+          <div class="li-card">
+            <div class="li-card-header">
+              <div class="li-card-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                Banner Recommendation & Custom Profile URL
+              </div>
+            </div>
+
+            <div>
+              <p style="font-size: 0.82rem; color: #cbd5e1;">
+                <strong>Recommended Dimensions:</strong> 1584 x 396 px (16:9 ratio).<br>
+                <strong>Visual Aesthetic:</strong> Deep Navy/Charcoal gradient with clean typography highlighting your core value statement.
+              </p>
+              
+              <div class="banner-mock">
+                <div class="banner-title" id="liBannerTitle">Alexander R. Morgan | Senior Full Stack & AI Engineer</div>
+                <div class="banner-subtitle" id="liBannerSubtitle">Building High-Scale Cloud Systems & Production AI Architectures</div>
+              </div>
+
+              <div style="margin-top: 1rem; font-size: 0.82rem; color: #cbd5e1;">
+                <strong>Custom Profile URL Suggestions:</strong>
+                <ul style="padding-left: 1.25rem; margin-top: 0.35rem; line-height: 1.5;" id="liUrlSuggestions"></ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Master Copy Action -->
+          <div style="text-align: center; margin-bottom: 2rem;">
+            <button class="btn btn-primary" id="btnCopyAllLi" style="padding: 0.75rem 1.75rem; font-size: 0.9rem;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              Copy Complete LinkedIn Content
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- VIEW 3: ATS SCORE ANALYSIS -->
+      <div class="view-container" id="viewAts">
+        <div class="ats-container">
+          
+          <div class="ats-hero-card">
+            <div class="ats-gauge" id="atsGauge">
+              <div class="ats-gauge-inner">
+                <span class="ats-score-num" id="atsScoreNum">96</span>
+                <span class="ats-score-lbl">ATS Match</span>
+              </div>
+            </div>
+            <div class="ats-hero-info">
+              <h3>Exceptional ATS Compatibility Rating</h3>
+              <p>Your resume satisfies top Applicant Tracking Systems (Workday, Taleo, Greenhouse, Lever, iCIMS). Clean Times New Roman typography, zero tables, standard section naming, strong action verbs, and quantifiable metrics.</p>
+            </div>
+          </div>
+
+          <div class="ats-audit-grid">
+            
+            <div class="audit-card">
+              <div class="audit-card-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                ATS Formatting & Structure
+              </div>
+              <div class="audit-item pass">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span><strong>No Tables or Text Boxes:</strong> Single-column semantic block layout easily scanned by parsing engines.</span>
+              </div>
+              <div class="audit-item pass">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span><strong>Standard Typography:</strong> Times New Roman serif font natively indexed by all OCR engines.</span>
+              </div>
+              <div class="audit-item pass">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span><strong>Canonical Section Headings:</strong> Standard headers (Summary, Skills, Experience, Projects, Certifications, Education).</span>
+              </div>
+              <div class="audit-item pass">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span><strong>A4 Dimensions & Margins:</strong> 15mm-18mm margins formatted for 1-page density.</span>
+              </div>
+            </div>
+
+            <div class="audit-card">
+              <div class="audit-card-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                Content Impact & Metrics
+              </div>
+              <div class="audit-item pass">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span><strong>High Action-Verb Density:</strong> <span id="atsVerbCount">14</span> strong verbs detected (Architected, Spearheaded, Engineered, Accelerated, Deployed).</span>
+              </div>
+              <div class="audit-item pass">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span><strong>Quantifiable Results:</strong> <span id="atsMetricsCount">8</span> measurable impacts (% improvements, latency reductions, user scale numbers).</span>
+              </div>
+              <div class="audit-item pass">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span><strong>Contact Discoverability:</strong> Complete email, phone, location, and clickable profile links.</span>
+              </div>
+              <div class="audit-item pass" id="atsKeywordsStatus">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span><strong>Role Alignment:</strong> Target job role keywords mapped to experience bullets.</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="appToast">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+    <span id="toastMsg">Action completed successfully</span>
+  </div>
+
+  <!-- Vendored Core Libraries -->
+  <script src="vendor/docx.umd.js"></script>
+  <script src="vendor/FileSaver.min.js"></script>
+  <script src="vendor/html2pdf.bundle.min.js"></script>
+
+  <!-- Application Logic -->
+  <script src="resume-app.js"></script>
+</body>
+</html>
