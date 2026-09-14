@@ -1,4 +1,4 @@
-﻿/* ResumeAI Pro - Modern Application & Print Stylesheet */
+/* ResumeAI Pro - Modern Application & Print Stylesheet */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
@@ -217,6 +217,68 @@ body {
   flex-direction: column;
   height: 100%;
   overflow: hidden;
+}
+
+/* Resume Track Selector */
+.track-selector-bar {
+  padding: 0.75rem 0.9rem;
+  background: #080e1a;
+  border-bottom: 1px solid var(--border-color);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.track-toggle-btn {
+  background: #141f32;
+  border: 1.5px solid #283548;
+  border-radius: 8px;
+  padding: 0.6rem 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+  color: var(--text-primary);
+  font-family: inherit;
+}
+
+.track-toggle-btn:hover {
+  border-color: #3b82f6;
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.track-toggle-btn.active {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.25), rgba(15, 23, 42, 0.95));
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 1px #3b82f6, 0 4px 12px rgba(37, 99, 235, 0.25);
+}
+
+.track-icon {
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.track-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.track-name {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.track-sub {
+  font-size: 0.68rem;
+  color: #94a3b8;
+  margin-top: 1px;
+}
+
+.track-toggle-btn.active .track-name {
+  color: #93c5fd;
 }
 
 .step-wizard-bar {
@@ -746,7 +808,18 @@ textarea.form-control {
 }
 
 .edu-entry {
-  margin-bottom: 3.5pt;
+  margin-bottom: 4.5pt;
+}
+
+.edu-coursework {
+  font-size: 9.3pt;
+  line-height: 1.25;
+  margin-top: 1.5pt;
+  color: #111827;
+}
+
+.edu-coursework strong {
+  font-weight: bold;
 }
 
 /* ============================================================
@@ -977,6 +1050,31 @@ textarea.form-control {
   border-radius: 9999px;
   font-size: 0.75rem;
   font-weight: 500;
+}
+
+.core-val-pill {
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  color: #93c5fd;
+  border-radius: 9999px;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.core-val-pill:hover {
+  background: rgba(37, 99, 235, 0.35);
+  border-color: #60a5fa;
+  color: #ffffff;
+}
+
+.core-val-pill.active {
+  background: #2563eb;
+  border-color: #3b82f6;
+  color: #ffffff;
 }
 
 .banner-mock {

@@ -31,19 +31,17 @@
         <p>ATS Resume Writer & LinkedIn Optimization Suite</p>
       </div>
       <div class="header-badges">
+        <span class="badge" id="activeTrackBadge" style="background: rgba(37,99,235,0.25); border: 1px solid #3b82f6; color: #93c5fd;">🎓 Student Track (Internships)</span>
         <span class="badge badge-ats">100% ATS Verified</span>
-        <span class="badge badge-ai">Ivy League / Wall St Standard</span>
       </div>
     </div>
 
     <div class="header-actions">
-      <button class="btn btn-secondary btn-sm" id="btnLoadSample" title="Pre-fill form with a world-class senior engineer profile">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-          <polyline points="7 10 12 15 17 10"></polyline>
-          <line x1="12" y1="15" x2="12" y2="3"></line>
-        </svg>
-        Load Sample Profile
+      <button class="btn btn-secondary btn-sm" id="btnLoadStudentSample" title="Pre-fill form with a college student internship profile (1st–4th year)">
+        🎓 Load Student Sample
+      </button>
+      <button class="btn btn-secondary btn-sm" id="btnLoadExperiencedSample" title="Pre-fill form with an experienced senior engineer profile">
+        💼 Load Industry Sample
       </button>
       <button class="btn btn-outline btn-sm" id="btnClearForm" title="Reset all form fields">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -61,6 +59,25 @@
 
     <!-- LEFT PANE: 6-STEP WIZARD FORM -->
     <div class="form-pane">
+
+      <!-- RESUME TRACK SELECTOR (STUDENTS VS EXPERIENCED) -->
+      <div class="track-selector-bar">
+        <button type="button" class="track-toggle-btn active" id="trackStudentBtn" data-track="student" title="ATS Template for 1st, 2nd, 3rd, 4th Year College Students seeking Internships">
+          <span class="track-icon">🎓</span>
+          <div class="track-info">
+            <span class="track-name">Student / Internship Track</span>
+            <span class="track-sub">1st–4th Year (Education & Projects First)</span>
+          </div>
+        </button>
+        <button type="button" class="track-toggle-btn" id="trackExperiencedBtn" data-track="experienced" title="ATS Template for Experienced Job Seekers with Industry Work History">
+          <span class="track-icon">💼</span>
+          <div class="track-info">
+            <span class="track-name">Experienced Industry Track</span>
+            <span class="track-sub">Job Seeker (Work Experience First)</span>
+          </div>
+        </button>
+      </div>
+
       <!-- Wizard Navigation Bar -->
       <div class="step-wizard-bar" id="wizardTabs">
         <div class="step-tab active" data-step="1">
@@ -108,9 +125,22 @@
           </div>
 
           <div class="form-group">
-            <label for="targetRole">Target Job Role *</label>
-            <input type="text" id="targetRole" class="form-control" placeholder="e.g. Senior Full Stack Engineer / AI Specialist" required>
+            <label for="targetRole" id="lblTargetRole">Target Job Role / Internship *</label>
+            <input type="text" id="targetRole" class="form-control" placeholder="e.g. Flutter Developer Intern / Software Engineering Intern" required>
             <p class="input-hint">Keywords in your resume and LinkedIn will be optimized for this role.</p>
+          </div>
+
+          <!-- Student Year of Study (Active in Student Mode) -->
+          <div class="form-group" id="groupStudentYear">
+            <label for="studentYear">Current Year of Study *</label>
+            <select id="studentYear" class="form-control">
+              <option value="1st Year">1st Year Undergraduate (Freshman)</option>
+              <option value="2nd Year">2nd Year Undergraduate (Sophomore)</option>
+              <option value="3rd Year" selected>3rd Year Undergraduate (Pre-Final Year)</option>
+              <option value="4th Year">4th Year Undergraduate (Final Year / Recent Graduate)</option>
+              <option value="Postgraduate / Masters">Postgraduate / Masters Student</option>
+            </select>
+            <p class="input-hint">Used by the AI synthesizer to calibrate your internship eligibility and project focus.</p>
           </div>
 
           <div class="form-row">
@@ -146,25 +176,57 @@
           <div class="step-header">
             <h2>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="12 8 8 12 12 16 12 8"></polygon></svg>
-              Step 2 — Professional Summary
+              Step 2 — Professional Summary & Core Values
             </h2>
-            <p>Define your career focus, specialization, and key value proposition.</p>
+            <p>AI automatically synthesizes your Career Objective and Core Values based on your target role, skills, projects, and education.</p>
+          </div>
+
+          <!-- AI Auto-Generator Trigger Card -->
+          <div class="ai-banner-card" style="background: linear-gradient(135deg, rgba(37,99,235,0.15), rgba(79,70,229,0.18)); border: 1px solid rgba(59,130,246,0.35); border-radius: 8px; padding: 12px 16px; margin-bottom: 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="font-size: 1.35rem;">✨</span>
+              <div>
+                <div style="font-size: 0.85rem; font-weight: 700; color: #93c5fd;">AI Auto-Generator Ready</div>
+                <div style="font-size: 0.75rem; color: #cbd5e1;">Creates tailored objectives & principles without inventing fake experience.</div>
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary btn-sm" id="btnAiGenerateSummary" style="font-size: 0.78rem; padding: 0.45rem 0.9rem; display: inline-flex; align-items: center; gap: 6px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg>
+              ✨ Generate with AI
+            </button>
           </div>
 
           <div class="form-group">
-            <label for="careerObjective">Career Objective & Core Value *</label>
-            <textarea id="careerObjective" class="form-control" rows="4" placeholder="Briefly describe your career trajectory, core strengths, and what you bring to target employers..."></textarea>
-            <p class="input-hint">Will be polished with ATS action verbs and recruiter keywords.</p>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+              <label for="careerObjective" style="margin-bottom:0;">Career Objective *</label>
+              <button type="button" class="btn-text-sm" id="btnRegenObjective" style="background:none; border:none; color:#60a5fa; cursor:pointer; font-size:0.75rem; display:inline-flex; align-items:center; gap:4px; padding:2px 6px;">
+                🔄 Regenerate Variation
+              </button>
+            </div>
+            <textarea id="careerObjective" class="form-control" rows="3" placeholder="Click '✨ Generate with AI' or fill your Target Role & Skills to auto-generate your 2–3 line objective..."></textarea>
+            <p class="input-hint">2–3 lines focused on target role + skills + what you want to contribute to the company.</p>
           </div>
 
           <div class="form-group">
-            <label for="yearsExperience">Years of Experience <span class="opt">(optional)</span></label>
-            <input type="text" id="yearsExperience" class="form-control" placeholder="e.g. 6+ years">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+              <label for="coreValues" style="margin-bottom:0;">Core Values & Work Principles *</label>
+              <button type="button" class="btn-text-sm" id="btnRegenValues" style="background:none; border:none; color:#60a5fa; cursor:pointer; font-size:0.75rem; display:inline-flex; align-items:center; gap:4px; padding:2px 6px;">
+                🔄 Refresh Values
+              </button>
+            </div>
+            <input type="text" id="coreValues" class="form-control" placeholder="e.g. Problem Solving • Continuous Learning • Team Collaboration • User-Centric Design">
+            <p class="input-hint">3–5 keywords or work principles describing your professional mindset.</p>
+            <div class="core-values-suggestions" id="coreValuesBadges" style="display:flex; flex-wrap:wrap; gap:6px; margin-top:8px;"></div>
           </div>
 
           <div class="form-group">
-            <label for="interests">Key Technical Interests & Focus Areas</label>
-            <input type="text" id="interests" class="form-control" placeholder="e.g. Distributed Systems, Large Language Models, Cloud Native Infrastructure">
+            <label for="yearsExperience">Years of Experience <span class="opt">(optional, leave blank if fresher)</span></label>
+            <input type="text" id="yearsExperience" class="form-control" placeholder="e.g. Fresher, 1+ year, 5+ years">
+          </div>
+
+          <div class="form-group">
+            <label for="interests">Key Technical Interests & Focus Areas <span class="opt">(optional)</span></label>
+            <input type="text" id="interests" class="form-control" placeholder="e.g. Mobile Architecture, Cloud Systems, UI/UX Engineering">
           </div>
         </div>
 
@@ -213,21 +275,21 @@
           <!-- Experience Section -->
           <div style="margin-bottom: 1.5rem;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-              <h3 style="font-size: 0.9rem; font-weight: 700; color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.05em;">Work Experience</h3>
+              <h3 id="expHeading" style="font-size: 0.9rem; font-weight: 700; color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.05em;">Internships & Work Experience</h3>
             </div>
             <div id="experienceContainer">
               <!-- Dynamically rendered experience items -->
             </div>
             <button type="button" class="btn-add-item" id="btnAddExperience">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-              Add Work Experience
+              <span id="btnAddExpLabel">Add Experience / Internship</span>
             </button>
           </div>
 
           <!-- Projects Section -->
           <div>
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-              <h3 style="font-size: 0.9rem; font-weight: 700; color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.05em;">Key Technical Projects</h3>
+              <h3 id="projHeading" style="font-size: 0.9rem; font-weight: 700; color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.05em;">Technical & Academic Projects</h3>
             </div>
             <div id="projectsContainer">
               <!-- Dynamically rendered project items -->
@@ -372,6 +434,7 @@
             <section class="resume-section" id="sectionSummary">
               <div class="section-title">PROFESSIONAL SUMMARY</div>
               <div class="resume-summary-text" id="previewSummary"></div>
+              <div class="resume-core-values" id="previewCoreValues" style="margin-top: 3pt; font-size: 9.6pt; line-height: 1.25;"></div>
             </section>
 
             <!-- 4. Skills (Categorized without tables) -->
@@ -416,35 +479,35 @@
           <div class="linkedin-score-banner">
             <div class="score-main">
               <div class="score-circle">
-                <span class="val" id="liOverallScore">96</span>
+                <span class="val" id="liOverallScore">0</span>
                 <span class="sub">Score</span>
               </div>
               <div>
                 <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.2rem;">LinkedIn Profile Strength</h3>
-                <p style="font-size: 0.82rem; opacity: 0.9;">Ranked in top 2% for recruiter discoverability</p>
+                <p style="font-size: 0.82rem; opacity: 0.9;" id="liStrengthText">Complete your profile to see live ranking</p>
               </div>
             </div>
 
             <div class="score-breakdown-grid">
               <div class="score-mini-card">
                 <div class="name">Headline</div>
-                <div class="val" id="scoreHeadline">98%</div>
+                <div class="val" id="scoreHeadline">0%</div>
               </div>
               <div class="score-mini-card">
                 <div class="name">About</div>
-                <div class="val" id="scoreAbout">95%</div>
+                <div class="val" id="scoreAbout">0%</div>
               </div>
               <div class="score-mini-card">
                 <div class="name">Experience</div>
-                <div class="val" id="scoreExp">94%</div>
+                <div class="val" id="scoreExp">0%</div>
               </div>
               <div class="score-mini-card">
                 <div class="name">Skills</div>
-                <div class="val" id="scoreSkills">96%</div>
+                <div class="val" id="scoreSkills">0%</div>
               </div>
               <div class="score-mini-card">
                 <div class="name">Keywords</div>
-                <div class="val" id="scoreKw">97%</div>
+                <div class="val" id="scoreKw">0%</div>
               </div>
             </div>
           </div>
@@ -568,13 +631,13 @@
           <div class="ats-hero-card">
             <div class="ats-gauge" id="atsGauge">
               <div class="ats-gauge-inner">
-                <span class="ats-score-num" id="atsScoreNum">96</span>
+                <span class="ats-score-num" id="atsScoreNum">0</span>
                 <span class="ats-score-lbl">ATS Match</span>
               </div>
             </div>
             <div class="ats-hero-info">
-              <h3>Exceptional ATS Compatibility Rating</h3>
-              <p>Your resume satisfies top Applicant Tracking Systems (Workday, Taleo, Greenhouse, Lever, iCIMS). Clean Times New Roman typography, zero tables, standard section naming, strong action verbs, and quantifiable metrics.</p>
+              <h3 id="atsHeroTitle">ATS Rating: 0% — No Resume Content</h3>
+              <p id="atsHeroDesc">Enter your professional details in the form or click "Load Sample Profile" to generate ATS score and recommendations.</p>
             </div>
           </div>
 
@@ -610,11 +673,11 @@
               </div>
               <div class="audit-item pass">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                <span><strong>High Action-Verb Density:</strong> <span id="atsVerbCount">14</span> strong verbs detected (Architected, Spearheaded, Engineered, Accelerated, Deployed).</span>
+                <span><strong>High Action-Verb Density:</strong> <span id="atsVerbCount">0</span> strong verbs detected.</span>
               </div>
               <div class="audit-item pass">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                <span><strong>Quantifiable Results:</strong> <span id="atsMetricsCount">8</span> measurable impacts (% improvements, latency reductions, user scale numbers).</span>
+                <span><strong>Quantifiable Results:</strong> <span id="atsMetricsCount">0</span> measurable impacts (% improvements, latency reductions, user scale numbers).</span>
               </div>
               <div class="audit-item pass">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>

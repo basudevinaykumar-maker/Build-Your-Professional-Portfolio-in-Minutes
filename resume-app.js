@@ -10,11 +10,13 @@
 const AppState = {
   currentStep: 1,
   currentView: 'resume',
+  resumeMode: 'student', // 'student' | 'experienced'
   isEditing: false,
   data: {
     personal: {
       fullName: '',
       targetRole: '',
+      studentYear: '3rd Year',
       email: '',
       phone: '',
       location: '',
@@ -23,6 +25,7 @@ const AppState = {
     },
     summary: {
       careerObjective: '',
+      coreValues: '',
       yearsExperience: '',
       interests: ''
     },
@@ -44,11 +47,84 @@ const AppState = {
   }
 };
 
-// World-Class Sample Profile
-const SAMPLE_PROFILE = {
+// 🎓 Track 1: College Student / Internship Applicant Profile (1st–4th Year)
+const STUDENT_SAMPLE_PROFILE = {
+  personal: {
+    fullName: 'Aryan K. Sharma',
+    targetRole: 'Software Engineering Intern (Flutter & Full Stack)',
+    studentYear: '3rd Year',
+    email: 'aryan.sharma@nitk.edu.in',
+    phone: '+91 98765 43210',
+    location: 'Bangalore, India (Open to Remote)',
+    linkedinUrl: 'linkedin.com/in/aryan-sharma-tech',
+    githubUrl: 'github.com/aryansharma-dev'
+  },
+  summary: {
+    careerObjective: 'Motivated 3rd Year Computer Science undergraduate with strong technical skills in Flutter, Dart, Firebase, and React. Passionate about building scalable cross-platform mobile apps and responsive web services with clean architecture and intuitive user experiences. Seeking a Software Engineering Internship to contribute directly to product velocity and collaborative engineering sprints.',
+    coreValues: 'Problem Solving • Continuous Learning • Team Collaboration • User-Centric Design • Clean Architecture',
+    yearsExperience: 'Fresher / Internship Applicant',
+    interests: 'Cross-Platform App Development, Cloud-Native Backends, Algorithmic Optimization, Open-Source Contributions'
+  },
+  skills: {
+    techSkills: 'Flutter, Dart, React.js, JavaScript (ES6+), Python, C++, Java, Node.js, SQL, HTML5/CSS3',
+    toolsTech: 'Git, GitHub, Firebase (Firestore, Auth, Cloud Functions), REST APIs, Postman, SQLite, Provider, VS Code, Linux',
+    softSkills: 'Analytical Problem Solving, Fast Learner, Agile Sprint Participation, Technical Documentation, Peer Code Review',
+    languages: 'English (Professional Working), Hindi (Native)'
+  },
+  education: [
+    {
+      id: 'edu-1',
+      college: 'National Institute of Technology Karnataka (NITK), Surathkal',
+      degree: 'B.Tech in Computer Science & Engineering (3rd Year)',
+      cgpa: '8.82 / 10.00',
+      startYear: '2023',
+      endYear: '2027 (Expected)',
+      coursework: 'Data Structures & Algorithms, Object-Oriented Programming, Database Management Systems (DBMS), Operating Systems, Computer Networks, Software Engineering'
+    }
+  ],
+  projects: [
+    {
+      id: 'proj-1',
+      name: 'CampusPulse — Student Collaboration & Attendance Mobile App',
+      techStack: 'Flutter, Dart, Firebase Firestore, Cloud Messaging, Provider',
+      description: 'Engineered a cross-platform mobile application enabling 1,200+ college students to track attendance percentages, browse course syllabi, and receive real-time campus event announcements.\nImplemented reactive state management using Provider and local offline caching via SQLite, reducing app startup latency by 45%.\nConfigured automated push notification triggers using Firebase Cloud Functions with 99.4% delivery reliability.',
+      githubLink: 'github.com/aryansharma-dev/campuspulse-app',
+      liveLink: 'play.google.com/store/apps/details?id=com.campus.pulse'
+    },
+    {
+      id: 'proj-2',
+      name: 'DevConnect — Real-Time Peer Code Review & Collaboration Suite',
+      techStack: 'React, Node.js, Express, MongoDB, Socket.io, TailwindCSS',
+      description: 'Developed full stack collaborative web application enabling 500+ student developers to share code snippets and perform synchronized pair-programming.\nIntegrated WebSocket bi-directional communication channels for instant collaborative code editing with zero-latency synchronization.\nArchitected modular RESTful backend services with JWT authentication, bcrypt encryption, and input sanitization.',
+      githubLink: 'github.com/aryansharma-dev/devconnect-platform',
+      liveLink: 'devconnect-collab.web.app'
+    }
+  ],
+  experience: [
+    {
+      id: 'exp-1',
+      role: 'Mobile Application Development Intern',
+      company: 'InnovateX Labs',
+      location: 'Bangalore, India',
+      duration: 'May 2025 – Jul 2025',
+      responsibilities: 'Collaborated with senior engineers to implement 12+ reusable UI components in Flutter conforming to Material Design 3 guidelines.\nIntegrated REST API endpoints for user authentication, profile management, and live activity feeds with robust error handling.',
+      achievements: 'Optimized app memory footprint by 28% through lazy list rendering and efficient widget rebuilding lifecycles.\nAuthored automated widget and unit tests, increasing codebase test coverage from 42% to 78%.'
+    }
+  ],
+  certifications: {
+    certs: 'Google Cloud Computing Foundations Certificate (Google Cloud, 2024)\nMeta Front-End Developer Professional Certificate (Coursera, 2024)\nProblem Solving (Intermediate) Certificate — HackerRank',
+    awards: 'Institute Merit Scholarship (Top 5% of CSE department, 2023–2025)\nDean’s Academic Honor Roll (All Semesters)',
+    hackathons: 'Finalist (Top 10 out of 450+ teams) — Smart India Hackathon (SIH 2024)\n1st Place Winner — CodeQuest Inter-College Hackathon 2024',
+    publications: ''
+  }
+};
+
+// 💼 Track 2: Experienced Job Seeker Profile (7+ Years Industry History)
+const EXPERIENCED_SAMPLE_PROFILE = {
   personal: {
     fullName: 'Alexander R. Morgan',
     targetRole: 'Senior Full Stack Engineer & AI Systems Architect',
+    studentYear: '',
     email: 'alex.morgan@alumni.stanford.edu',
     phone: '+1 (415) 890-4122',
     location: 'San Francisco, CA',
@@ -57,6 +133,7 @@ const SAMPLE_PROFILE = {
   },
   summary: {
     careerObjective: 'Results-driven Senior Full Stack Engineer & Systems Architect with 7+ years of experience engineering high-throughput distributed systems, event-driven microservices, and enterprise LLM applications. Track record of scaling cloud infrastructure to 15M+ active users, optimizing database latency by 42%, and driving $3.2M in annual operational efficiency. Passionate about fault-tolerant backend architectures, TypeScript/React ecosystems, and production AI orchestration.',
+    coreValues: 'System Scalability • Fault Tolerance • Problem Solving • Team Leadership • Continuous Innovation',
     yearsExperience: '7+ Years',
     interests: 'Distributed Consensus, Large Language Model Pipelines, Cloud-Native Scalability, Real-Time Data Streaming'
   },
@@ -73,8 +150,8 @@ const SAMPLE_PROFILE = {
       company: 'Stripe — Core Infrastructure',
       location: 'San Francisco, CA',
       duration: 'Jan 2022 – Present',
-      responsibilities: 'Spearheaded architecture and implementation of distributed payment processing pipelines handling 8,500+ transactions per second. Orchestrated migration from legacy monolithic services to containerized Kubernetes microservices on AWS.',
-      achievements: 'Reduced p99 API latency from 450ms to 65ms (85% reduction) through distributed Redis caching and query plan indexing. Authored zero-downtime database partitioning strategy preserving 99.999% platform availability across Black Friday peak volumes.'
+      responsibilities: 'Spearheaded architecture and implementation of distributed payment processing pipelines handling 8,500+ transactions per second.\nOrchestrated migration from legacy monolithic services to containerized Kubernetes microservices on AWS.',
+      achievements: 'Reduced p99 API latency from 450ms to 65ms (85% reduction) through distributed Redis caching and query plan indexing.\nAuthored zero-downtime database partitioning strategy preserving 99.999% platform availability across Black Friday peak volumes.'
     },
     {
       id: 'exp-2',
@@ -82,7 +159,7 @@ const SAMPLE_PROFILE = {
       company: 'Palantir Technologies',
       location: 'Palo Alto, CA',
       duration: 'Aug 2019 – Dec 2021',
-      responsibilities: 'Engineered end-to-end data exploration interfaces in React, TypeScript, and Python FastAPI for Fortune 500 defense and logistics clients. Designed automated CI/CD deployment pipelines reducing release turnaround from 4 days to 25 minutes.',
+      responsibilities: 'Engineered end-to-end data exploration interfaces in React, TypeScript, and Python FastAPI for Fortune 500 defense and logistics clients.\nDesigned automated CI/CD deployment pipelines reducing release turnaround from 4 days to 25 minutes.',
       achievements: 'Delivered enterprise analytics module adopted by 40+ client organizations, generating $1.8M in net new ARR within the first two quarters of launch.'
     }
   ],
@@ -91,7 +168,7 @@ const SAMPLE_PROFILE = {
       id: 'proj-1',
       name: 'NexusAI — Autonomous Agentic Workflow Orchestrator',
       techStack: 'Python, FastAPI, TypeScript, React, Pinecone, OpenAI / Gemini API, Redis',
-      description: 'Architected open-source multi-agent collaboration framework with vector retrieval, asynchronous worker queues, and dynamic tool orchestration. Surpassed 3,800+ GitHub stars with 45,000+ monthly downloads.',
+      description: 'Architected open-source multi-agent collaboration framework with vector retrieval, asynchronous worker queues, and dynamic tool orchestration.\nSurpassed 3,800+ GitHub stars with 45,000+ monthly downloads and enterprise adoption.',
       githubLink: 'github.com/alexandermorgan/nexus-ai',
       liveLink: 'demo.nexusai.dev'
     },
@@ -99,7 +176,7 @@ const SAMPLE_PROFILE = {
       id: 'proj-2',
       name: 'HyperScale Distributed Cache & Message Bus',
       techStack: 'Go, Raft Consensus, gRPC, Protobuf, Docker',
-      description: 'Built distributed replicated in-memory key-value store implementing the Raft consensus protocol with snapshotting and dynamic log compaction; achieved sub-2ms replication times across 5 global node clusters.',
+      description: 'Built distributed replicated in-memory key-value store implementing the Raft consensus protocol with snapshotting and dynamic log compaction.\nAchieved sub-2ms replication times across 5 global node clusters under simulated network partitions.',
       githubLink: 'github.com/alexandermorgan/hyperscale-bus',
       liveLink: ''
     }
@@ -117,10 +194,14 @@ const SAMPLE_PROFILE = {
       degree: 'B.S. in Computer Science (Systems & Artificial Intelligence)',
       cgpa: '3.92 / 4.00',
       startYear: '2015',
-      endYear: '2019'
+      endYear: '2019',
+      coursework: 'Distributed Systems, Advanced Operating Systems, Artificial Intelligence, Machine Learning'
     }
   ]
 };
+
+// Default Sample Profile reference
+const SAMPLE_PROFILE = STUDENT_SAMPLE_PROFILE;
 
 // ==========================================
 // 2. SVG ICONS FOR RESUME & INTERFACE
@@ -145,8 +226,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initExportHandlers();
   initFormSync();
 
-  // Load sample profile automatically for immediate preview
-  loadProfile(SAMPLE_PROFILE);
+  // Initialize track to Student (default) and load student sample profile
+  switchResumeTrack('student', false);
+  loadProfile(STUDENT_SAMPLE_PROFILE);
 
   // If user is logged into PortfolioAI, prefill their details
   checkPortfolioUser();
@@ -161,7 +243,7 @@ function checkPortfolioUser() {
 
   if (loggedName && loggedName !== 'User') {
     const fullNameInput = document.getElementById('fullName');
-    if (fullNameInput && (!fullNameInput.value || fullNameInput.value === 'Alexander R. Morgan')) {
+    if (fullNameInput && (!fullNameInput.value || fullNameInput.value === 'Aryan K. Sharma' || fullNameInput.value === 'Alexander R. Morgan')) {
       fullNameInput.value = loggedName;
       AppState.data.personal.fullName = loggedName;
     }
@@ -169,7 +251,7 @@ function checkPortfolioUser() {
 
   if (loggedEmail) {
     const emailInput = document.getElementById('email');
-    if (emailInput && (!emailInput.value || emailInput.value === 'alex.morgan@alumni.stanford.edu')) {
+    if (emailInput && (!emailInput.value || emailInput.value === 'aryan.sharma@nitk.edu.in' || emailInput.value === 'alex.morgan@alumni.stanford.edu')) {
       emailInput.value = loggedEmail;
       AppState.data.personal.email = loggedEmail;
     }
@@ -253,6 +335,13 @@ function initWizardNavigation() {
       panel.classList.toggle('active', idx + 1 === step);
     });
 
+    if (step === 2) {
+      const objEl = document.getElementById('careerObjective');
+      if (objEl && !objEl.value.trim() && AppState.data.personal.targetRole) {
+        triggerAiSummaryGeneration(false);
+      }
+    }
+
     btnPrev.disabled = (step === 1);
     if (step === 6) {
       btnNext.innerHTML = `<span>Generate Resume</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
@@ -297,10 +386,132 @@ function initViewTabs() {
 }
 
 // ==========================================
+// 5.5. TRACK SWITCHER (STUDENT VS EXPERIENCED)
+// ==========================================
+
+function switchResumeTrack(mode, triggerRender = true) {
+  AppState.resumeMode = mode;
+
+  // 1. Toggle Tab Buttons
+  const studentBtn = document.getElementById('trackStudentBtn');
+  const expBtn = document.getElementById('trackExperiencedBtn');
+  if (studentBtn) studentBtn.classList.toggle('active', mode === 'student');
+  if (expBtn) expBtn.classList.toggle('active', mode === 'experienced');
+
+  // 2. Update Header Badge
+  const trackBadge = document.getElementById('activeTrackBadge');
+  if (trackBadge) {
+    if (mode === 'student') {
+      trackBadge.innerText = '🎓 Student Track (Internships)';
+      trackBadge.style.background = 'rgba(37,99,235,0.25)';
+      trackBadge.style.borderColor = '#3b82f6';
+      trackBadge.style.color = '#93c5fd';
+    } else {
+      trackBadge.innerText = '💼 Experienced Industry Track';
+      trackBadge.style.background = 'rgba(16,185,129,0.2)';
+      trackBadge.style.borderColor = '#10b981';
+      trackBadge.style.color = '#6ee7b7';
+    }
+  }
+
+  // 3. Toggle Year of Study dropdown in Step 1
+  const groupYear = document.getElementById('groupStudentYear');
+  if (groupYear) {
+    groupYear.style.display = (mode === 'student') ? 'block' : 'none';
+  }
+
+  // 4. Update Target Role Label & Placeholder
+  const lblRole = document.getElementById('lblTargetRole');
+  const targetRoleInput = document.getElementById('targetRole');
+  if (lblRole) {
+    lblRole.innerText = (mode === 'student') 
+      ? 'Target Job Role / Internship *' 
+      : 'Target Job Role / Position *';
+  }
+  if (targetRoleInput) {
+    if (mode === 'student' && (!targetRoleInput.value || targetRoleInput.value.includes('Senior'))) {
+      targetRoleInput.placeholder = 'e.g. Flutter Developer Intern / Software Engineering Intern';
+    } else if (mode === 'experienced' && (!targetRoleInput.value || targetRoleInput.value.includes('Intern'))) {
+      targetRoleInput.placeholder = 'e.g. Senior Full Stack Engineer & AI Systems Architect';
+    }
+  }
+
+  // 5. Update Headings & Button labels in Step 4
+  const expHeading = document.getElementById('expHeading');
+  const addExpLabel = document.getElementById('btnAddExpLabel');
+  const projHeading = document.getElementById('projHeading');
+
+  if (expHeading) {
+    expHeading.innerText = (mode === 'student') 
+      ? 'Internships & Work Experience (Optional for 1st/2nd Year)' 
+      : 'Professional Work Experience';
+  }
+  if (addExpLabel) {
+    addExpLabel.innerText = (mode === 'student') 
+      ? 'Add Internship / Training' 
+      : 'Add Work Experience';
+  }
+  if (projHeading) {
+    projHeading.innerText = (mode === 'student') 
+      ? 'Technical & Academic Projects (Priority for Students)' 
+      : 'Key Architecture & Technical Projects';
+  }
+
+  if (triggerRender) {
+    renderAll();
+  }
+}
+
+// ==========================================
 // 6. DYNAMIC FORM ENTRIES
 // ==========================================
 
 function initDynamicFormHandlers() {
+  // Track selector buttons
+  const btnTrackStudent = document.getElementById('trackStudentBtn');
+  if (btnTrackStudent) {
+    btnTrackStudent.addEventListener('click', () => {
+      switchResumeTrack('student');
+      showToast('Switched to Student / Internship Track (1st–4th Year)');
+    });
+  }
+
+  const btnTrackExp = document.getElementById('trackExperiencedBtn');
+  if (btnTrackExp) {
+    btnTrackExp.addEventListener('click', () => {
+      switchResumeTrack('experienced');
+      showToast('Switched to Experienced Industry Track');
+    });
+  }
+
+  // Sample profile loader buttons
+  const btnLoadStudent = document.getElementById('btnLoadStudentSample');
+  if (btnLoadStudent) {
+    btnLoadStudent.addEventListener('click', () => {
+      switchResumeTrack('student', false);
+      loadProfile(STUDENT_SAMPLE_PROFILE);
+      showToast('🎓 Loaded College Student Internship Profile (3rd Year)!');
+    });
+  }
+
+  const btnLoadExp = document.getElementById('btnLoadExperiencedSample');
+  if (btnLoadExp) {
+    btnLoadExp.addEventListener('click', () => {
+      switchResumeTrack('experienced', false);
+      loadProfile(EXPERIENCED_SAMPLE_PROFILE);
+      showToast('💼 Loaded Experienced Industry Profile (7+ Years)!');
+    });
+  }
+
+  const oldLoadSample = document.getElementById('btnLoadSample');
+  if (oldLoadSample) {
+    oldLoadSample.addEventListener('click', () => {
+      loadProfile(SAMPLE_PROFILE);
+      showToast('Sample profile loaded!');
+    });
+  }
+
+  // Dynamic add buttons
   document.getElementById('btnAddExperience').addEventListener('click', () => {
     addExperienceItem();
   });
@@ -313,17 +524,42 @@ function initDynamicFormHandlers() {
     addEducationItem();
   });
 
-  document.getElementById('btnLoadSample').addEventListener('click', () => {
-    loadProfile(SAMPLE_PROFILE);
-    showToast('Sample profile loaded!');
-  });
-
   document.getElementById('btnClearForm').addEventListener('click', () => {
     if (confirm('Clear all form fields?')) {
       clearForm();
       showToast('Form cleared');
     }
   });
+
+  // AI Summary & Core Values Generation Handlers
+  const btnAiGen = document.getElementById('btnAiGenerateSummary');
+  if (btnAiGen) {
+    btnAiGen.addEventListener('click', () => {
+      triggerAiSummaryGeneration(true);
+    });
+  }
+
+  const btnRegenObj = document.getElementById('btnRegenObjective');
+  if (btnRegenObj) {
+    btnRegenObj.addEventListener('click', () => {
+      triggerAiSummaryGeneration(true);
+    });
+  }
+
+  const btnRegenVal = document.getElementById('btnRegenValues');
+  if (btnRegenVal) {
+    btnRegenVal.addEventListener('click', () => {
+      summaryVariationIndex++;
+      const result = generateAiSummaryAndValues(AppState.data, summaryVariationIndex);
+      const valInput = document.getElementById('coreValues');
+      if (valInput) {
+        valInput.value = result.coreValues;
+        renderCoreValuesBadges(result.valuesList);
+        syncFromForm();
+        showToast('Core Values refreshed!');
+      }
+    });
+  }
 }
 
 function addExperienceItem(data = null) {
@@ -430,26 +666,31 @@ function addEducationItem(data = null) {
     <div class="form-row">
       <div class="form-group">
         <label>College / University *</label>
-        <input type="text" class="form-control edu-college" placeholder="e.g. Stanford University" value="${data?.college || ''}">
+        <input type="text" class="form-control edu-college" placeholder="e.g. Stanford University / NITK Surathkal" value="${data?.college || ''}">
       </div>
       <div class="form-group">
         <label>Degree & Major *</label>
-        <input type="text" class="form-control edu-degree" placeholder="e.g. B.S. in Computer Science" value="${data?.degree || ''}">
+        <input type="text" class="form-control edu-degree" placeholder="e.g. B.Tech in Computer Science & Engineering" value="${data?.degree || ''}">
       </div>
     </div>
     <div class="form-row-3">
       <div class="form-group">
         <label>CGPA / GPA</label>
-        <input type="text" class="form-control edu-cgpa" placeholder="e.g. 3.92 / 4.00" value="${data?.cgpa || ''}">
+        <input type="text" class="form-control edu-cgpa" placeholder="e.g. 8.82 / 10.00 or 3.92 / 4.00" value="${data?.cgpa || ''}">
       </div>
       <div class="form-group">
         <label>Start Year</label>
-        <input type="text" class="form-control edu-start" placeholder="e.g. 2015" value="${data?.startYear || ''}">
+        <input type="text" class="form-control edu-start" placeholder="e.g. 2023" value="${data?.startYear || ''}">
       </div>
       <div class="form-group">
         <label>End Year (or Expected)</label>
-        <input type="text" class="form-control edu-end" placeholder="e.g. 2019" value="${data?.endYear || ''}">
+        <input type="text" class="form-control edu-end" placeholder="e.g. 2027 (Expected)" value="${data?.endYear || ''}">
       </div>
+    </div>
+    <div class="form-group" style="margin-top: 0.5rem;">
+      <label>Relevant Coursework <span class="opt">(Crucial for Student & Internship ATS)</span></label>
+      <input type="text" class="form-control edu-coursework" placeholder="e.g. Data Structures & Algorithms, DBMS, Operating Systems, Computer Networks" value="${data?.coursework || ''}">
+      <p class="input-hint">Recruiters and ATS scanners match coursework against internship job prerequisites.</p>
     </div>
   `;
 
@@ -475,13 +716,268 @@ function attachInputListeners(container) {
 }
 
 // ==========================================
+// 6.5. AI RESUME SYNTHESIZER (CAREER OBJECTIVE & CORE VALUES)
+// ==========================================
+
+let summaryVariationIndex = 0;
+
+/**
+ * Generate AI-Powered Career Objective and Core Values based on:
+ * - Target Job Role (Primary Driver)
+ * - Skills (Personalizes technical competencies)
+ * - Education (Grounds academic background for students/freshers)
+ * - Projects (Demonstrates practical engineering ability)
+ * - Experience (If present, highlights professional track record; never invents fake companies)
+ * - Domain archetype & recruiter work principles
+ */
+function generateAiSummaryAndValues(profileData = null, variation = 0) {
+  const data = profileData || AppState.data;
+  const isStudentTrack = (AppState.resumeMode === 'student');
+  const studentYear = (data.personal?.studentYear || document.getElementById('studentYear')?.value || '3rd Year').trim();
+  const role = (data.personal?.targetRole || '').trim();
+  const skillsStr = (data.skills?.techSkills || '').trim();
+  const toolsStr = (data.skills?.toolsTech || '').trim();
+  const softStr = (data.skills?.softSkills || '').trim();
+  const interestsStr = (data.summary?.interests || '').trim();
+  const experience = data.experience || [];
+  const projects = data.projects || [];
+  const education = data.education || [];
+  const yearsExp = (data.summary?.yearsExperience || '').trim();
+
+  // Primary Role
+  const displayRole = role || (isStudentTrack ? 'Software Engineering Intern' : 'Software & Technology Professional');
+
+  // Extract skills
+  const allSkills = [
+    ...skillsStr.split(','),
+    ...toolsStr.split(',')
+  ].map(s => s.trim()).filter(Boolean);
+
+  const topSkills = allSkills.slice(0, 4);
+  const skillsPhrase = topSkills.length > 0 
+    ? (topSkills.length === 1 ? topSkills[0] : `${topSkills.slice(0, -1).join(', ')}, and ${topSkills[topSkills.length - 1]}`)
+    : 'modern programming languages and software engineering principles';
+
+  // Extract projects
+  const projectNames = projects.map(p => p.name?.trim()).filter(Boolean);
+  const topProjectsPhrase = projectNames.length > 0
+    ? (projectNames.length === 1 ? `including ${projectNames[0]}` : `including ${projectNames.slice(0, 2).join(' and ')}`)
+    : '';
+
+  // Extract education
+  const topEdu = education[0];
+  const eduDegree = topEdu?.degree?.trim() || '';
+  const eduCollege = topEdu?.college?.trim() || '';
+  const hasEdu = Boolean(eduDegree || eduCollege);
+
+  // Check if experienced or student
+  const validExp = experience.filter(e => e.role && e.company);
+  const isStudentOrFresher = isStudentTrack || (validExp.length === 0 && (!yearsExp || /^(0|none|fresher|student|intern|aspiring)$/i.test(yearsExp)));
+
+  // Determine domain archetype
+  const lowerRole = role.toLowerCase();
+  const lowerContext = (role + ' ' + skillsStr + ' ' + interestsStr).toLowerCase();
+  let domainFocus = 'general';
+  let defaultValues = [];
+
+  if (/flutter|react native|ios|android|swift|kotlin|mobile/i.test(lowerRole || lowerContext)) {
+    domainFocus = 'mobile';
+    defaultValues = isStudentTrack
+      ? ['Problem Solving', 'Continuous Learning', 'Team Collaboration', 'User-Centric Design', 'Clean Code']
+      : ['System Scalability', 'Fault Tolerance', 'Problem Solving', 'Team Leadership', 'Clean Architecture'];
+  } else if (/data|analyst|analytics|business intelligence|machine learning|ai|deep learning|data science/i.test(lowerRole || lowerContext)) {
+    domainFocus = 'data_ai';
+    defaultValues = ['Data-Driven Decision Making', 'Analytical Problem Solving', 'Continuous Learning', 'Algorithmic Precision', 'Team Collaboration'];
+  } else if (/devops|cloud|infrastructure|sre|aws|kubernetes|docker|terraform|site reliability/i.test(lowerRole || lowerContext)) {
+    domainFocus = 'devops';
+    defaultValues = ['High Availability', 'Automation Mindset', 'System Reliability', 'Continuous Improvement', 'Collaborative Operations'];
+  } else if (/frontend|ui|ux|web developer/i.test(lowerRole || lowerContext)) {
+    domainFocus = 'frontend';
+    defaultValues = ['User-Centric Design', 'Problem Solving', 'Continuous Learning', 'Modern Web Standards', 'Cross-Functional Teamwork'];
+  } else if (/backend|full stack|systems|api|distributed|golang|java|c\+\+|microservice|database/i.test(lowerRole || lowerContext)) {
+    domainFocus = 'backend';
+    defaultValues = isStudentTrack
+      ? ['Problem Solving', 'Continuous Learning', 'Data Integrity', 'Modular Design', 'Team Collaboration']
+      : ['System Scalability', 'Problem Solving', 'Data Integrity', 'Fault Tolerance', 'High Throughput'];
+  } else if (/qa|test|quality|automation test/i.test(lowerRole || lowerContext)) {
+    domainFocus = 'qa';
+    defaultValues = ['Quality Driven', 'Attention to Detail', 'Problem Solving', 'Continuous Learning', 'Agile Collaboration'];
+  } else {
+    domainFocus = 'general';
+    defaultValues = ['Problem Solving', 'Continuous Learning', 'Team Collaboration', 'Innovation', 'Results-Driven Execution'];
+  }
+
+  let objective = '';
+
+  if (isStudentOrFresher) {
+    // --- 🎓 COLLEGE STUDENT INTERNSHIP TRACK (1st to 4th Year) ---
+    let yearPrefix = '';
+    let yearContext = '';
+
+    if (/1st\s*year/i.test(studentYear)) {
+      yearPrefix = `High-achieving 1st Year ${eduDegree ? eduDegree.split('(')[0].trim() : 'Computer Science'} undergraduate`;
+      yearContext = `with strong foundational knowledge in ${skillsPhrase} and core algorithmic problem solving.`;
+    } else if (/2nd\s*year/i.test(studentYear)) {
+      yearPrefix = `Motivated 2nd Year ${eduDegree ? eduDegree.split('(')[0].trim() : 'Computer Science'} undergraduate`;
+      yearContext = `equipped with practical competencies in ${skillsPhrase}${topProjectsPhrase ? `, hands-on project experience ${topProjectsPhrase},` : ''} and solid coursework in Data Structures.`;
+    } else if (/4th\s*year/i.test(studentYear)) {
+      yearPrefix = `Results-oriented 4th Year ${eduDegree ? eduDegree.split('(')[0].trim() : 'Computer Science'} student preparing for graduation`;
+      yearContext = `with comprehensive expertise in ${skillsPhrase} and full lifecycle development experience${topProjectsPhrase ? ` across capstone projects ${topProjectsPhrase}` : ''}.`;
+    } else if (/master|postgrad/i.test(studentYear)) {
+      yearPrefix = `Dedicated Master's student in ${eduDegree ? eduDegree.split('(')[0].trim() : 'Computer Science'}`;
+      yearContext = `with advanced competencies in ${skillsPhrase}${hasEdu && eduCollege ? ` at ${eduCollege}` : ''}.`;
+    } else {
+      // Default / 3rd Year
+      yearPrefix = `Driven 3rd Year ${eduDegree ? eduDegree.split('(')[0].trim() : 'Computer Science'} undergraduate`;
+      yearContext = `with proven technical skills in ${skillsPhrase}${topProjectsPhrase ? ` demonstrated across practical projects ${topProjectsPhrase}` : ''}${hasEdu && eduCollege ? ` at ${eduCollege}` : ''}.`;
+    }
+
+    const valueContributions = [
+      domainFocus === 'mobile'
+        ? `Passionate about building scalable mobile applications and delivering intuitive user experiences while continuously improving technical expertise.`
+        : domainFocus === 'frontend'
+        ? `Passionate about crafting responsive, performant user interfaces and building seamless client experiences adhering to modern clean-code principles.`
+        : domainFocus === 'backend'
+        ? `Dedicated to engineering scalable backend APIs, modular microservices, and efficient database solutions that support robust platform operations.`
+        : domainFocus === 'data_ai'
+        ? `Eager to apply data analytics and predictive modeling to solve complex problems and extract meaningful, data-backed business insights.`
+        : domainFocus === 'devops'
+        ? `Focused on automating cloud deployments, optimizing CI/CD workflows, and enhancing infrastructure uptime and resilience.`
+        : `Committed to solving real-world challenges through clean code, proactive technical problem-solving, and cross-functional team collaboration.`
+    ];
+
+    const internshipGoals = [
+      `Seeking a ${displayRole} opportunity to contribute directly to engineering sprints while expanding professional software development capabilities.`,
+      `Eager to leverage core technical competencies to deliver high-quality solutions and accelerate team goals in an agile engineering environment.`,
+      `Aimed at delivering reliable, well-tested code and contributing meaningfully to production releases in a collaborative internship program.`
+    ];
+
+    const gIdx = variation % internshipGoals.length;
+    objective = `${yearPrefix} ${yearContext} ${valueContributions[0]} ${internshipGoals[gIdx]}`;
+
+  } else {
+    // --- 💼 EXPERIENCED INDUSTRY TRACK ---
+    const expText = yearsExp ? `${yearsExp} of` : `${validExp.length}+ years of`;
+    const topCompany = validExp[0]?.company ? ` at ${validExp[0].company}` : '';
+
+    const openings = [
+      `Results-driven ${displayRole} with ${expText} hands-on experience engineering scalable solutions in ${skillsPhrase}${topCompany}.`,
+      `Accomplished ${displayRole} with a proven background in ${skillsPhrase}${topProjectsPhrase ? `, delivering end-to-end technical initiatives ${topProjectsPhrase}` : ''}.`,
+      `High-performing ${displayRole} with ${expText} track record of architecting and deploying resilient systems with ${skillsPhrase}.`
+    ];
+
+    const valueContributions = [
+      domainFocus === 'mobile'
+        ? `Demonstrated expertise in architecting performant cross-platform mobile systems, reducing crash rates, and elevating client interface responsiveness.`
+        : domainFocus === 'frontend'
+        ? `Proven ability to optimize rendering lifecycles, lead modern UI component architectures, and engineer accessible digital products.`
+        : domainFocus === 'backend'
+        ? `Track record of scaling distributed microservices, optimizing database latencies, and ensuring zero-downtime production availability.`
+        : domainFocus === 'data_ai'
+        ? `Proven history of architecting end-to-end data pipelines, operationalizing machine learning models, and driving business decision agility.`
+        : domainFocus === 'devops'
+        ? `Specialized in building infrastructure-as-code pipelines, orchestrating multi-region container clusters, and securing cloud environments.`
+        : `Track record of translating complex product roadmaps into maintainable architectures and delivering measurable business results.`
+    ];
+
+    const contributions = [
+      `Passionate about fostering cross-functional excellence, mentoring talent, and driving high-impact technical innovation.`,
+      `Dedicated to engineering reliability, operational excellence, and delivering strategic value for high-growth teams.`,
+      `Committed to delivering scalable software architectures, operational resilience, and quantifiable bottom-line outcomes.`
+    ];
+
+    const oIdx = variation % openings.length;
+    const cIdx = variation % contributions.length;
+    objective = `${openings[oIdx]} ${valueContributions[0]} ${contributions[cIdx]}`;
+  }
+
+  // Rotate / customize core values based on variation
+  let coreValuesList = [...defaultValues];
+  if (variation > 0) {
+    const rotated = coreValuesList.slice(1).concat(coreValuesList.slice(0, 1));
+    coreValuesList = rotated;
+  }
+
+  return {
+    objective: objective.trim(),
+    coreValues: coreValuesList.join(' • '),
+    valuesList: coreValuesList
+  };
+}
+
+/**
+ * Trigger AI Summary and Core Values Generation
+ */
+function triggerAiSummaryGeneration(showToastMsg = true) {
+  summaryVariationIndex++;
+  const result = generateAiSummaryAndValues(AppState.data, summaryVariationIndex);
+
+  const objInput = document.getElementById('careerObjective');
+  const valuesInput = document.getElementById('coreValues');
+
+  if (objInput) objInput.value = result.objective;
+  if (valuesInput) valuesInput.value = result.coreValues;
+
+  renderCoreValuesBadges(result.valuesList);
+  syncFromForm();
+
+  if (showToastMsg) {
+    showToast('✨ Career Objective & Core Values auto-generated!');
+  }
+}
+
+/**
+ * Render Interactive Core Value Badges in Step 2
+ */
+function renderCoreValuesBadges(suggestedValues = []) {
+  const container = document.getElementById('coreValuesBadges');
+  if (!container) return;
+
+  const currentValStr = document.getElementById('coreValues')?.value || '';
+  const currentItems = currentValStr.split(/[•,|]/).map(s => s.trim()).filter(Boolean);
+
+  const bank = Array.from(new Set([
+    ...suggestedValues,
+    'Problem Solving', 'Continuous Learning', 'Team Collaboration', 
+    'User-Centric Design', 'Clean Architecture', 'System Scalability',
+    'Analytical Rigor', 'High Availability', 'Innovation Mindset'
+  ])).slice(0, 8);
+
+  container.innerHTML = bank.map(val => {
+    const isActive = currentItems.some(item => item.toLowerCase() === val.toLowerCase());
+    return `<button type="button" class="core-val-pill ${isActive ? 'active' : ''}" onclick="toggleCoreValuePill('${val}')">${isActive ? '✓' : '+'} ${val}</button>`;
+  }).join('');
+}
+
+/**
+ * Toggle Core Value Pill in or out of the input
+ */
+window.toggleCoreValuePill = function(valueName) {
+  const input = document.getElementById('coreValues');
+  if (!input) return;
+
+  let items = input.value.split(/[•,|]/).map(s => s.trim()).filter(Boolean);
+  const existingIdx = items.findIndex(s => s.toLowerCase() === valueName.toLowerCase());
+
+  if (existingIdx >= 0) {
+    items.splice(existingIdx, 1);
+  } else {
+    items.push(valueName);
+  }
+
+  input.value = items.join(' • ');
+  renderCoreValuesBadges(items);
+  syncFromForm();
+};
+
+// ==========================================
 // 7. FORM DATA SYNC & EXTRACTION
 // ==========================================
 
 function initFormSync() {
   const staticInputs = [
-    'fullName', 'targetRole', 'email', 'phone', 'location', 'linkedinUrl', 'githubUrl',
-    'careerObjective', 'yearsExperience', 'interests',
+    'fullName', 'targetRole', 'studentYear', 'email', 'phone', 'location', 'linkedinUrl', 'githubUrl',
+    'careerObjective', 'coreValues', 'yearsExperience', 'interests',
     'techSkills', 'toolsTech', 'softSkills', 'languages',
     'certifications', 'awards', 'hackathons', 'publications'
   ];
@@ -489,8 +985,15 @@ function initFormSync() {
   staticInputs.forEach(id => {
     const el = document.getElementById(id);
     if (el) {
-      el.addEventListener('input', () => {
+      const eventType = (el.tagName === 'SELECT') ? 'change' : 'input';
+      el.addEventListener(eventType, () => {
         syncFromForm();
+        if (id === 'targetRole' || id === 'techSkills' || id === 'studentYear') {
+          const objInput = document.getElementById('careerObjective');
+          if (objInput && !objInput.value.trim() && el.value.trim()) {
+            triggerAiSummaryGeneration(false);
+          }
+        }
       });
     }
   });
@@ -500,6 +1003,7 @@ function syncFromForm() {
   AppState.data.personal = {
     fullName: document.getElementById('fullName').value.trim(),
     targetRole: document.getElementById('targetRole').value.trim(),
+    studentYear: document.getElementById('studentYear')?.value.trim() || '3rd Year',
     email: document.getElementById('email').value.trim(),
     phone: document.getElementById('phone').value.trim(),
     location: document.getElementById('location').value.trim(),
@@ -509,6 +1013,7 @@ function syncFromForm() {
 
   AppState.data.summary = {
     careerObjective: document.getElementById('careerObjective').value.trim(),
+    coreValues: document.getElementById('coreValues')?.value.trim() || '',
     yearsExperience: document.getElementById('yearsExperience').value.trim(),
     interests: document.getElementById('interests').value.trim()
   };
@@ -555,7 +1060,7 @@ function syncFromForm() {
     publications: document.getElementById('publications').value.trim()
   };
 
-  // Education
+  // Education (with Coursework for Student & Internship ATS)
   AppState.data.education = [];
   document.querySelectorAll('#educationContainer .item-card').forEach(card => {
     AppState.data.education.push({
@@ -564,7 +1069,8 @@ function syncFromForm() {
       degree: card.querySelector('.edu-degree')?.value.trim() || '',
       cgpa: card.querySelector('.edu-cgpa')?.value.trim() || '',
       startYear: card.querySelector('.edu-start')?.value.trim() || '',
-      endYear: card.querySelector('.edu-end')?.value.trim() || ''
+      endYear: card.querySelector('.edu-end')?.value.trim() || '',
+      coursework: card.querySelector('.edu-coursework')?.value.trim() || ''
     });
   });
 
@@ -572,8 +1078,18 @@ function syncFromForm() {
 }
 
 function loadProfile(profile) {
+  // Sync track based on profile
+  if (profile.personal.studentYear || profile.personal.fullName === 'Aryan K. Sharma') {
+    switchResumeTrack('student', false);
+  } else {
+    switchResumeTrack('experienced', false);
+  }
+
   document.getElementById('fullName').value = profile.personal.fullName;
   document.getElementById('targetRole').value = profile.personal.targetRole;
+  if (document.getElementById('studentYear')) {
+    document.getElementById('studentYear').value = profile.personal.studentYear || '3rd Year';
+  }
   document.getElementById('email').value = profile.personal.email;
   document.getElementById('phone').value = profile.personal.phone;
   document.getElementById('location').value = profile.personal.location;
@@ -581,6 +1097,10 @@ function loadProfile(profile) {
   document.getElementById('githubUrl').value = profile.personal.githubUrl;
 
   document.getElementById('careerObjective').value = profile.summary.careerObjective;
+  if (document.getElementById('coreValues')) {
+    document.getElementById('coreValues').value = profile.summary.coreValues || '';
+    renderCoreValuesBadges(profile.summary.coreValues ? profile.summary.coreValues.split(/[•,|]/).map(s => s.trim()) : []);
+  }
   document.getElementById('yearsExperience').value = profile.summary.yearsExperience;
   document.getElementById('interests').value = profile.summary.interests;
 
@@ -613,6 +1133,22 @@ function clearForm() {
   document.getElementById('experienceContainer').innerHTML = '';
   document.getElementById('projectsContainer').innerHTML = '';
   document.getElementById('educationContainer').innerHTML = '';
+  const badgesContainer = document.getElementById('coreValuesBadges');
+  if (badgesContainer) badgesContainer.innerHTML = '';
+
+  const selYear = document.getElementById('studentYear');
+  if (selYear) selYear.value = '3rd Year';
+
+  AppState.data = {
+    personal: { fullName: '', targetRole: '', studentYear: '3rd Year', email: '', phone: '', location: '', linkedinUrl: '', githubUrl: '' },
+    summary: { careerObjective: '', coreValues: '', yearsExperience: '', interests: '' },
+    skills: { techSkills: '', toolsTech: '', softSkills: '', languages: '' },
+    experience: [],
+    projects: [],
+    certifications: { certs: '', awards: '', hackathons: '', publications: '' },
+    education: []
+  };
+
   syncFromForm();
 }
 
@@ -639,6 +1175,66 @@ function renderAll() {
  */
 function renderResumePreview() {
   const { personal, summary, skills, experience, projects, certifications, education } = AppState.data;
+
+  // Reorder and re-title sections dynamically based on Active Track (Student vs Experienced)
+  const sheet = document.getElementById('resumeSheet');
+  const header = sheet ? sheet.querySelector('.resume-header') : null;
+  const secSummary = document.getElementById('sectionSummary');
+  const secSkills = document.getElementById('sectionSkills');
+  const secExperience = document.getElementById('sectionExperience');
+  const secProjects = document.getElementById('sectionProjects');
+  const secCertifications = document.getElementById('sectionCertifications');
+  const secEducation = document.getElementById('sectionEducation');
+
+  if (sheet) {
+    if (AppState.resumeMode === 'student') {
+      // 🎓 STUDENT ATS ORDER:
+      // 1. Header & Contact
+      // 2. Career/Internship Objective
+      // 3. Education & Relevant Coursework (Crucial: Placed right after objective!)
+      // 4. Technical Skills & Competencies
+      // 5. Technical & Academic Projects (Priority for Students!)
+      // 6. Internships & Work Experience (if any)
+      // 7. Honors & Certifications
+      if (header) sheet.appendChild(header);
+      if (secSummary) sheet.appendChild(secSummary);
+      if (secEducation) sheet.appendChild(secEducation);
+      if (secSkills) sheet.appendChild(secSkills);
+      if (secProjects) sheet.appendChild(secProjects);
+      if (secExperience) sheet.appendChild(secExperience);
+      if (secCertifications) sheet.appendChild(secCertifications);
+
+      if (secSummary) secSummary.querySelector('.section-title').innerText = 'CAREER OBJECTIVE';
+      if (secEducation) secEducation.querySelector('.section-title').innerText = 'EDUCATION & RELEVANT COURSEWORK';
+      if (secSkills) secSkills.querySelector('.section-title').innerText = 'TECHNICAL SKILLS & COMPETENCIES';
+      if (secProjects) secProjects.querySelector('.section-title').innerText = 'TECHNICAL & ACADEMIC PROJECTS';
+      if (secExperience) secExperience.querySelector('.section-title').innerText = 'INTERNSHIPS & WORK EXPERIENCE';
+      if (secCertifications) secCertifications.querySelector('.section-title').innerText = 'HONORS, CERTIFICATIONS & HACKATHONS';
+    } else {
+      // 💼 EXPERIENCED INDUSTRY ATS ORDER:
+      // 1. Header & Contact
+      // 2. Executive / Professional Summary
+      // 3. Core Competencies & Technical Skills
+      // 4. Professional Work Experience (Metrics driven)
+      // 5. Key Technical Projects
+      // 6. Awards & Certifications
+      // 7. Education (At the bottom)
+      if (header) sheet.appendChild(header);
+      if (secSummary) sheet.appendChild(secSummary);
+      if (secSkills) sheet.appendChild(secSkills);
+      if (secExperience) sheet.appendChild(secExperience);
+      if (secProjects) sheet.appendChild(secProjects);
+      if (secCertifications) sheet.appendChild(secCertifications);
+      if (secEducation) sheet.appendChild(secEducation);
+
+      if (secSummary) secSummary.querySelector('.section-title').innerText = 'PROFESSIONAL SUMMARY';
+      if (secSkills) secSkills.querySelector('.section-title').innerText = 'CORE COMPETENCIES & TECHNICAL SKILLS';
+      if (secExperience) secExperience.querySelector('.section-title').innerText = 'PROFESSIONAL EXPERIENCE';
+      if (secProjects) secProjects.querySelector('.section-title').innerText = 'KEY TECHNICAL PROJECTS';
+      if (secCertifications) secCertifications.querySelector('.section-title').innerText = 'AWARDS & CERTIFICATIONS';
+      if (secEducation) secEducation.querySelector('.section-title').innerText = 'EDUCATION';
+    }
+  }
 
   // 1. Centered Full Name
   const nameEl = document.getElementById('previewName');
@@ -668,12 +1264,20 @@ function renderResumePreview() {
 
   contactRow.innerHTML = contactParts.join('<span class="contact-sep">|</span>');
 
-  // 3. Career Summary
+  // 3. Career Summary & Core Values
   const summaryEl = document.getElementById('previewSummary');
+  const coreValuesEl = document.getElementById('previewCoreValues');
   const summarySection = document.getElementById('sectionSummary');
-  if (summary.careerObjective) {
+  if (summary.careerObjective || summary.coreValues) {
     summarySection.style.display = 'block';
-    summaryEl.innerText = summary.careerObjective;
+    summaryEl.innerText = summary.careerObjective || '';
+    if (summary.coreValues) {
+      coreValuesEl.style.display = 'block';
+      coreValuesEl.innerHTML = `<span class="skills-label">Core Values & Principles:</span> ${summary.coreValues}`;
+    } else {
+      coreValuesEl.style.display = 'none';
+      coreValuesEl.innerHTML = '';
+    }
   } else {
     summarySection.style.display = 'none';
   }
@@ -783,7 +1387,7 @@ function renderResumePreview() {
     certSection.style.display = 'none';
   }
 
-  // 8. Education
+  // 8. Education (Includes Coursework for Student ATS)
   const eduEl = document.getElementById('previewEducation');
   const eduSection = document.getElementById('sectionEducation');
   if (education.length > 0) {
@@ -791,6 +1395,12 @@ function renderResumePreview() {
     eduEl.innerHTML = education.map(edu => {
       const yearRange = [edu.startYear, edu.endYear].filter(Boolean).join(' – ');
       const cgpaText = edu.cgpa ? ` | Cumulative GPA: ${edu.cgpa}` : '';
+      const courseworkHtml = edu.coursework ? `
+        <div class="edu-coursework" style="font-size: 9.3pt; line-height: 1.25; margin-top: 2pt;">
+          <strong>Relevant Coursework:</strong> ${edu.coursework}
+        </div>
+      ` : '';
+
       return `
         <div class="edu-entry">
           <div class="entry-header-row">
@@ -800,6 +1410,7 @@ function renderResumePreview() {
           <div class="entry-sub-row">
             <span class="entry-company">${edu.college || 'University'}${cgpaText}</span>
           </div>
+          ${courseworkHtml}
         </div>
       `;
     }).join('');
@@ -821,53 +1432,149 @@ function splitIntoBullets(text) {
  */
 function renderLinkedInOptimization() {
   const { personal, summary, skills, experience, projects, education } = AppState.data;
-  const role = personal.targetRole || 'Senior Software Engineer';
-  const name = personal.fullName || 'Professional';
-  const years = summary.yearsExperience || '5+ years';
+  const role = personal.targetRole || '';
+  const name = personal.fullName || '';
+  const years = summary.yearsExperience || '';
 
   // Primary Skills Slice
-  const skillList = (skills.techSkills ? skills.techSkills.split(',') : ['Full Stack', 'Cloud Architecture', 'TypeScript', 'Python'])
+  const skillList = (skills.techSkills ? skills.techSkills.split(',') : [])
     .map(s => s.trim()).filter(Boolean);
-  const top3Skills = skillList.slice(0, 3).join(' | ') || 'Distributed Systems | Cloud Native';
-  const top5Skills = skillList.slice(0, 5).join(' • ') || 'Full Stack • Cloud Architecture';
+  const top3Skills = skillList.slice(0, 3).join(' | ') || '';
+  const top5Skills = skillList.slice(0, 5).join(' • ') || '';
 
   // Extract top company
-  const topCompany = experience[0]?.company || 'Tech Leader';
+  const topCompany = experience[0]?.company || '';
+
+  // Check if user has entered data
+  const hasData = Boolean(personal.fullName || personal.targetRole || summary.careerObjective || skills.techSkills || experience.length);
+
+  // --- LIVE LINKEDIN SCORES (0 - 100%) ---
+  let headlineScore = 0;
+  if (personal.targetRole) headlineScore += 50;
+  if (skills.techSkills) headlineScore += 30;
+  if (summary.interests || top3Skills) headlineScore += 20;
+
+  let aboutScore = 0;
+  const objLen = (summary.careerObjective || '').length;
+  if (objLen > 20) aboutScore += 30;
+  if (objLen > 100) aboutScore += 35;
+  if (objLen > 200) aboutScore += 25;
+  if (summary.yearsExperience) aboutScore += 10;
+
+  let expScore = 0;
+  if (experience.length > 0) {
+    const validExp = experience.filter(e => e.role && e.company);
+    if (validExp.length >= 1) expScore += 50;
+    if (validExp.length >= 2) expScore += 30;
+    const hasMetrics = experience.some(e => /\d+|%|\$/.test(e.achievements || ''));
+    if (hasMetrics) expScore += 20;
+  }
+
+  let skillsScore = 0;
+  if (skills.techSkills) skillsScore += 35;
+  if (skills.toolsTech) skillsScore += 25;
+  if (skills.softSkills) skillsScore += 25;
+  if (skills.languages) skillsScore += 15;
+
+  let kwScore = 0;
+  const presentKeywords = Array.from(new Set([
+    role,
+    ...skillList.slice(0, 10),
+    skills.toolsTech ? 'System Design' : '',
+    experience.length ? 'Performance Optimization' : ''
+  ])).filter(Boolean);
+
+  if (presentKeywords.length > 0) {
+    kwScore = Math.min(100, Math.round(presentKeywords.length * 12.5));
+  }
+
+  const liOverall = hasData ? Math.round(
+    headlineScore * 0.20 +
+    aboutScore * 0.25 +
+    expScore * 0.25 +
+    skillsScore * 0.15 +
+    kwScore * 0.15
+  ) : 0;
+
+  // Live Score Updates to DOM
+  const elOverall = document.getElementById('liOverallScore');
+  const elHead = document.getElementById('scoreHeadline');
+  const elAbout = document.getElementById('scoreAbout');
+  const elExp = document.getElementById('scoreExp');
+  const elSkills = document.getElementById('scoreSkills');
+  const elKw = document.getElementById('scoreKw');
+
+  if (elOverall) elOverall.innerText = liOverall;
+  if (elHead) elHead.innerText = `${headlineScore}%`;
+  if (elAbout) elAbout.innerText = `${aboutScore}%`;
+  if (elExp) elExp.innerText = `${expScore}%`;
+  if (elSkills) elSkills.innerText = `${skillsScore}%`;
+  if (elKw) elKw.innerText = `${kwScore}%`;
+
+  const elStrength = document.getElementById('liStrengthText');
+  if (elStrength) {
+    if (liOverall >= 90) {
+      elStrength.innerText = 'Ranked in top 2% for recruiter discoverability';
+    } else if (liOverall >= 75) {
+      elStrength.innerText = 'Strong profile — ranked in top 15% of candidates';
+    } else if (liOverall >= 50) {
+      elStrength.innerText = 'Moderate strength — add more keywords and metrics';
+    } else if (liOverall > 0) {
+      elStrength.innerText = 'Profile in progress — complete sections to boost ranking';
+    } else {
+      elStrength.innerText = 'No profile data entered yet — complete form to calculate score';
+    }
+  }
+
+  const scoreCircle = document.querySelector('.score-circle');
+  if (scoreCircle) {
+    if (liOverall >= 85) scoreCircle.style.borderColor = '#10b981';
+    else if (liOverall >= 50) scoreCircle.style.borderColor = '#60a5fa';
+    else if (liOverall > 0) scoreCircle.style.borderColor = '#f59e0b';
+    else scoreCircle.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+  }
 
   // 3 LinkedIn Headlines
-  const h1 = `${role} | ${top3Skills} | Scaling Distributed Systems & Production AI Architecture`;
-  const h2 = `Helping enterprise engineering teams scale high-performance systems with ${skillList[0] || 'Modern Cloud'} & ${skillList[1] || 'Microservices'} | Ex-${topCompany} | ${years} Experience`;
-  const h3 = `Specialist in ${summary.interests ? summary.interests.split(',')[0].trim() : 'Cloud Native Architecture'} & Enterprise Platforms | Building Resilient 99.999% Available Systems`;
+  if (!hasData || (!role && !top3Skills)) {
+    document.getElementById('liHeadline1').innerText = 'Enter your Target Role and Skills in Step 1 & Step 3 to generate search-optimized headlines.';
+    document.getElementById('liHeadline2').innerText = 'Value-proposition headlines will generate live as you type.';
+    document.getElementById('liHeadline3').innerText = 'Specialized domain authority headlines will display here.';
+  } else {
+    const h1 = `${role || 'Professional'} | ${top3Skills || 'Specialist'} | Scaling High-Impact Systems`;
+    const h2 = `Helping organizations achieve technical excellence with ${skillList[0] || 'Modern Architecture'} & ${skillList[1] || 'Engineering Best Practices'}${topCompany ? ` | Ex-${topCompany}` : ''}${years ? ` | ${years} Experience` : ''}`;
+    const h3 = `Specialist in ${summary.interests ? summary.interests.split(',')[0].trim() : (role || 'Cloud Architecture')} | Building Resilient Systems & Measurable Business Impact`;
 
-  document.getElementById('liHeadline1').innerText = h1;
-  document.getElementById('liHeadline2').innerText = h2;
-  document.getElementById('liHeadline3').innerText = h3;
+    document.getElementById('liHeadline1').innerText = h1;
+    document.getElementById('liHeadline2').innerText = h2;
+    document.getElementById('liHeadline3').innerText = h3;
+  }
 
   // SEO Optimized About Section
-  const aboutText = `I am a ${role} with ${years} of experience designing, architecting, and operating high-throughput distributed systems and mission-critical cloud applications.
+  if (!summary.careerObjective && experience.length === 0) {
+    document.getElementById('liAboutText').innerText = 'Enter your Professional Summary in Step 2 and Work Experience in Step 4 to generate an SEO-optimized LinkedIn About section.';
+  } else {
+    const aboutText = `I am a ${role || 'results-driven professional'}${years ? ` with ${years} of experience` : ''} specializing in ${summary.interests || top3Skills || 'delivering impactful technical solutions'}.
 
-Throughout my career, I have focused on transforming complex technical challenges into scalable, elegant architectures. My approach marries strict engineering rigor with measurable business outcomes—optimizing latency, driving cloud operational efficiencies, and engineering developer-first platform infrastructure.
+Throughout my career, I have focused on translating complex business and technical requirements into scalable, robust outcomes with measurable impact.
 
-CORE COMPETENCIES & TECHNICAL PROFICIENCIES:
-• Architecture & Systems: Distributed Systems, Event-Driven Microservices, REST & GraphQL APIs, Database Sharding & Indexing
-• Technologies & Stack: ${top5Skills}
-• Cloud & DevOps: ${skills.toolsTech || 'Docker, Kubernetes, AWS, Terraform, CI/CD Pipelines'}
-• Leadership: Cross-functional collaboration, Agile engineering, architectural governance, and technical mentorship
+CORE COMPETENCIES & WORK PRINCIPLES:
+• Core Focus: ${role || 'Software Engineering & System Architecture'}
+${summary.coreValues ? `• Core Values: ${summary.coreValues}\n` : ''}• Technologies & Skills: ${top5Skills || skills.techSkills || 'Modern Technologies'}
+• Tools & Methodologies: ${skills.toolsTech || skills.softSkills || 'Agile Development & Leadership'}
 
-NOTABLE CAREER HIGHLIGHTS:
-${experience.map(e => `• At ${e.company}: ${e.achievements || e.responsibilities}`).slice(0, 2).join('\n')}
+HIGHLIGHTED ACCOMPLISHMENTS:
+${experience.length > 0 ? experience.map(e => `• At ${e.company || 'Previous Team'}: ${e.achievements || e.responsibilities || 'Delivered key initiatives'}`).slice(0, 2).join('\n') : (summary.careerObjective || 'Track record of high-performance delivery.')}
 
-I am deeply passionate about pushing the envelope in modern engineering and connecting with fellow builders, founders, and engineering leaders.
+Feel free to connect or reach out directly: ${personal.email || 'via LinkedIn'}.`;
 
-Feel free to connect or reach out via email: ${personal.email || 'via LinkedIn inMail'}.`;
-
-  document.getElementById('liAboutText').innerText = aboutText;
+    document.getElementById('liAboutText').innerText = aboutText;
+  }
 
   // STAR Format Experience
   const starContainer = document.getElementById('liStarContainer');
   if (experience.length > 0) {
     starContainer.innerHTML = experience.map((exp, idx) => {
-      const star = generateStarBreakdown(exp, role);
+      const star = generateStarBreakdown(exp, role || 'Target Role');
       const starId = `star_text_${idx}`;
       return `
         <div class="star-card">
@@ -892,43 +1599,44 @@ Feel free to connect or reach out via email: ${personal.email || 'via LinkedIn i
   const topKwEl = document.getElementById('liTopKeywords');
   const missingKwEl = document.getElementById('liMissingKeywords');
 
-  const presentKeywords = Array.from(new Set([
-    role,
-    ...skillList.slice(0, 10),
-    'System Architecture',
-    'Microservices',
-    'Performance Optimization'
-  ])).filter(Boolean);
-
   const roleKeywordsBank = [
     'System Design', 'CI/CD Automation', 'Cloud Native', 'Distributed Caching', 
     'Zero-Downtime Migration', 'Observability & Metrics', 'Agile Leadership', 
     'Kubernetes Cluster Management', 'Terraform IaC', 'Event-Driven Architecture'
   ];
 
-  const missingKeywords = roleKeywordsBank.filter(k => 
+  const missingKeywords = role ? roleKeywordsBank.filter(k => 
     !presentKeywords.some(p => p.toLowerCase().includes(k.toLowerCase()))
-  ).slice(0, 6);
+  ).slice(0, 6) : [];
 
-  topKwEl.innerHTML = presentKeywords.map(k => `<span class="keyword-pill">${k}</span>`).join('');
-  missingKwEl.innerHTML = missingKeywords.map(k => `<span class="missing-pill">+ ${k}</span>`).join('');
+  if (presentKeywords.length > 0) {
+    topKwEl.innerHTML = presentKeywords.map(k => `<span class="keyword-pill">${k}</span>`).join('');
+  } else {
+    topKwEl.innerHTML = `<span style="font-size:0.75rem; color:var(--text-muted);">No keywords detected yet. Add skills in Step 3.</span>`;
+  }
+
+  if (missingKeywords.length > 0) {
+    missingKwEl.innerHTML = missingKeywords.map(k => `<span class="missing-pill">+ ${k}</span>`).join('');
+  } else {
+    missingKwEl.innerHTML = `<span style="font-size:0.75rem; color:var(--text-muted);">Enter your target job role in Step 1 to see missing recruiter keywords.</span>`;
+  }
 
   // Banner Recommendation
-  document.getElementById('liBannerTitle').innerText = `${name} | ${role}`;
-  document.getElementById('liBannerSubtitle').innerText = `${top3Skills} • High-Impact Cloud & Systems Engineering`;
+  document.getElementById('liBannerTitle').innerText = name || role ? `${name || 'Your Name'} | ${role || 'Target Role'}` : 'Your Name | Target Role';
+  document.getElementById('liBannerSubtitle').innerText = top3Skills ? `${top3Skills} • High-Impact Engineering` : 'Your Core Competencies & Value Statement';
 
   // Custom Profile URL suggestions
-  const cleanName = name.toLowerCase().replace(/[^a-z0-9]/g, '');
+  const cleanName = (name || 'yourname').toLowerCase().replace(/[^a-z0-9]/g, '');
   const urlSuggestions = [
     `linkedin.com/in/${cleanName}`,
     `linkedin.com/in/${cleanName}-tech`,
-    `linkedin.com/in/${cleanName}-${role.toLowerCase().split(' ')[0]}`
+    `linkedin.com/in/${cleanName}-${(role || 'pro').toLowerCase().split(' ')[0]}`
   ];
   document.getElementById('liUrlSuggestions').innerHTML = urlSuggestions.map(u => `<li><a href="#" style="color:#60a5fa; text-decoration:none;" onclick="navigator.clipboard.writeText('${u}'); showToast('Copied URL suggestion!'); return false;">${u}</a> (Click to copy)</li>`).join('');
 
   // Setup Master Copy Button
   document.getElementById('btnCopyAllLi').onclick = () => {
-    const fullLiText = `=== 3 LINKEDIN HEADLINES ===\nOption 1: ${h1}\nOption 2: ${h2}\nOption 3: ${h3}\n\n=== ABOUT SECTION ===\n${aboutText}\n\n=== RECRUITER KEYWORDS ===\n${presentKeywords.join(', ')}\n\n=== BANNER RECOMMENDATION ===\nTitle: ${name} | ${role}\nSubtitle: ${top3Skills}`;
+    const fullLiText = `=== 3 LINKEDIN HEADLINES ===\nOption 1: ${document.getElementById('liHeadline1').innerText}\nOption 2: ${document.getElementById('liHeadline2').innerText}\nOption 3: ${document.getElementById('liHeadline3').innerText}\n\n=== ABOUT SECTION ===\n${document.getElementById('liAboutText').innerText}\n\n=== RECRUITER KEYWORDS ===\n${presentKeywords.join(', ')}`;
     navigator.clipboard.writeText(fullLiText).then(() => {
       showToast('Complete LinkedIn content copied to clipboard!');
     });
@@ -937,10 +1645,10 @@ Feel free to connect or reach out via email: ${personal.email || 'via LinkedIn i
 
 function generateStarBreakdown(exp, targetRole) {
   return {
-    situation: `Operating within ${exp.company || 'high-velocity team'} managing critical services required for enterprise scalability and reliability.`,
-    task: `Tasked with driving end-to-end delivery of ${exp.role || targetRole} initiatives while maintaining 99.99% system availability.`,
-    action: exp.responsibilities || `Architected robust containerized microservices and automated deployment pipelines utilizing modern industry best practices.`,
-    result: exp.achievements || `Delivered 40%+ performance gains, reduced operational latency, and enhanced core platform throughput.`
+    situation: `Operating within ${exp.company || 'high-velocity team'} managing critical services required for scalability and reliability.`,
+    task: `Tasked with driving end-to-end delivery of ${exp.role || targetRole} initiatives while maintaining high availability.`,
+    action: exp.responsibilities || `Architected robust modular services and automated deployment workflows utilizing modern industry best practices.`,
+    result: exp.achievements || `Delivered measurable efficiency gains and enhanced core operational throughput.`
   };
 }
 
@@ -955,41 +1663,105 @@ function renderAtsScoreAnalysis() {
     'spearhead', 'spearheaded', 'architect', 'architected', 'engineer', 'engineered', 
     'optimize', 'optimized', 'accelerate', 'accelerated', 'orchestrate', 'orchestrated', 
     'deploy', 'deployed', 'reduce', 'reduced', 'deliver', 'delivered', 'author', 'authored', 
-    'design', 'designed', 'scale', 'scaled', 'implement', 'implemented', 'transform', 'transformed'
+    'design', 'designed', 'scale', 'scaled', 'implement', 'implemented', 'transform', 'transformed',
+    'lead', 'led', 'manage', 'managed', 'created', 'built', 'developed'
   ];
 
   const fullText = [
-    summary.careerObjective,
-    ...experience.map(e => `${e.responsibilities} ${e.achievements}`),
-    ...projects.map(p => p.description)
+    summary.careerObjective || '',
+    ...experience.map(e => `${e.responsibilities || ''} ${e.achievements || ''}`),
+    ...projects.map(p => p.description || '')
   ].join(' ').toLowerCase();
 
   let verbsFound = 0;
-  actionVerbsList.forEach(v => {
-    const regex = new RegExp(`\\b${v}\\b`, 'gi');
-    const matches = fullText.match(regex);
-    if (matches) verbsFound += matches.length;
-  });
+  if (fullText.trim().length > 0) {
+    actionVerbsList.forEach(v => {
+      const regex = new RegExp(`\\b${v}\\b`, 'gi');
+      const matches = fullText.match(regex);
+      if (matches) verbsFound += matches.length;
+    });
+  }
 
   // Detect Quantifiable Metrics (numbers, %, $, ms, k, m)
-  const metricsRegex = /\b\d+(?:\.\d+)?%|\$\d+(?:\.\d+)?[MBKmbk]?|\b\d+ms\b|\b\d+[KkMm]\+?\b|\b\d{2,}\b/g;
-  const metricsFound = (fullText.match(metricsRegex) || []).length;
+  let metricsFound = 0;
+  if (fullText.trim().length > 0) {
+    const metricsRegex = /\b\d+(?:\.\d+)?%|\$\d+(?:\.\d+)?[MBKmbk]?|\b\d+ms\b|\b\d+[KkMm]\+?\b|\b\d{2,}\b/g;
+    metricsFound = (fullText.match(metricsRegex) || []).length;
+  }
 
-  document.getElementById('atsVerbCount').innerText = Math.max(verbsFound, 6);
-  document.getElementById('atsMetricsCount').innerText = Math.max(metricsFound, 4);
+  // --- LIVE ATS SCORING (0 to 100) ---
+  let score = 0;
 
-  // Score calculation
-  let score = 88;
-  if (personal.fullName && personal.email && personal.phone) score += 3;
-  if (skills.techSkills && skills.toolsTech) score += 3;
-  if (verbsFound >= 8) score += 2;
-  if (metricsFound >= 4) score += 2;
-  score = Math.min(score, 98);
+  // Contact Info (20 pts)
+  if (personal.fullName) score += 5;
+  if (personal.email) score += 5;
+  if (personal.phone) score += 5;
+  if (personal.location) score += 5;
 
+  // Summary (15 pts)
+  const objLen = (summary.careerObjective || '').length;
+  if (objLen > 150) score += 15;
+  else if (objLen > 50) score += 10;
+  else if (objLen > 10) score += 5;
+
+  // Skills (15 pts)
+  if (skills.techSkills) score += 6;
+  if (skills.toolsTech) score += 5;
+  if (skills.softSkills) score += 4;
+
+  // Experience (25 pts)
+  const validExp = experience.filter(e => e.role && e.company);
+  if (validExp.length >= 2) score += 25;
+  else if (validExp.length === 1) score += 15;
+
+  // Projects (10 pts)
+  const validProj = projects.filter(p => p.name && (p.description || p.techStack));
+  if (validProj.length >= 2) score += 10;
+  else if (validProj.length === 1) score += 6;
+
+  // Education (10 pts)
+  const validEdu = education.filter(e => e.college && e.degree);
+  if (validEdu.length >= 1) score += 10;
+
+  // Action Verbs (up to 3 pts)
+  score += Math.min(3, verbsFound);
+
+  // Metrics Bonus (up to 2 pts)
+  score += Math.min(2, metricsFound);
+
+  const hasAnyData = Boolean(personal.fullName || personal.targetRole || summary.careerObjective || skills.techSkills || experience.length || projects.length);
+  if (!hasAnyData) {
+    score = 0;
+  }
+
+  score = Math.min(100, score);
+
+  document.getElementById('atsVerbCount').innerText = verbsFound;
+  document.getElementById('atsMetricsCount').innerText = metricsFound;
   document.getElementById('atsScoreNum').innerText = score;
   const gauge = document.getElementById('atsGauge');
   if (gauge) {
-    gauge.style.background = `conic-gradient(#10b981 0% ${score}%, #1f2937 ${score}% 100%)`;
+    gauge.style.background = score > 0 
+      ? `conic-gradient(#10b981 0% ${score}%, #1f2937 ${score}% 100%)`
+      : `conic-gradient(#1f2937 0% 100%, #1f2937 100% 100%)`;
+  }
+
+  const atsTitle = document.getElementById('atsHeroTitle');
+  const atsDesc = document.getElementById('atsHeroDesc');
+  if (atsTitle && atsDesc) {
+    if (score >= 85) {
+      atsTitle.innerText = 'Exceptional ATS Compatibility Rating';
+      atsDesc.innerText = 'Your resume satisfies top Applicant Tracking Systems (Workday, Taleo, Greenhouse, Lever, iCIMS). Clean Times New Roman typography, zero tables, standard section naming, strong action verbs, and quantifiable metrics.';
+    } else if (score >= 50) {
+      atsTitle.innerText = `Moderate ATS Rating (${score}%) — Optimization Recommended`;
+      atsDesc.innerText = 'Your resume has good foundational structure. Add more quantifiable metrics, action verbs, and complete your experience section to achieve 90%+ pass rate.';
+    } else if (score > 0) {
+      atsTitle.innerText = `Preliminary ATS Rating (${score}%)`;
+      atsDesc.innerText = 'Keep filling in your education, skills, and work experience to satisfy all ATS parser criteria.';
+    } else {
+      atsTitle.innerText = 'ATS Rating: 0% — No Resume Content';
+      atsDesc.innerText = 'Enter your professional details in the form or click "Load Sample Profile" to generate ATS score and recommendations.';
+    }
   }
 }
 
@@ -1144,26 +1916,41 @@ function downloadDocx() {
     );
   }
 
-  // 3. Career Summary
-  if (summary.careerObjective) {
-    addSectionHeading('Professional Summary');
-    docChildren.push(
-      new Paragraph({
-        spacing: { after: 140 },
-        children: [
-          new TextRun({
-            text: summary.careerObjective,
-            size: 20,
-            font: font
-          })
-        ]
-      })
-    );
+  // Helper 1: Summary / Objective Section
+  function buildSummarySection(title) {
+    if (!summary.careerObjective && !summary.coreValues) return;
+    addSectionHeading(title);
+    if (summary.careerObjective) {
+      docChildren.push(
+        new Paragraph({
+          spacing: { after: 60 },
+          children: [
+            new TextRun({
+              text: summary.careerObjective,
+              size: 20,
+              font: font
+            })
+          ]
+        })
+      );
+    }
+    if (summary.coreValues) {
+      docChildren.push(
+        new Paragraph({
+          spacing: { after: 140 },
+          children: [
+            new TextRun({ text: "Core Values: ", bold: true, size: 19, font: font }),
+            new TextRun({ text: summary.coreValues, size: 19, font: font })
+          ]
+        })
+      );
+    }
   }
 
-  // 4. Skills
-  if (skills.techSkills || skills.toolsTech || skills.softSkills || skills.languages) {
-    addSectionHeading('Skills & Competencies');
+  // Helper 2: Skills Section
+  function buildSkillsSection(title) {
+    if (!skills.techSkills && !skills.toolsTech && !skills.softSkills && !skills.languages) return;
+    addSectionHeading(title);
     if (skills.techSkills) {
       docChildren.push(
         new Paragraph({
@@ -1210,11 +1997,11 @@ function downloadDocx() {
     }
   }
 
-  // 5. Experience
-  if (experience.length > 0) {
-    addSectionHeading('Professional Experience');
+  // Helper 3: Experience Section
+  function buildExperienceSection(title) {
+    if (experience.length === 0) return;
+    addSectionHeading(title);
     experience.forEach(exp => {
-      // Role & Duration
       docChildren.push(
         new Paragraph({
           spacing: { before: 100, after: 30 },
@@ -1224,7 +2011,6 @@ function downloadDocx() {
           ]
         })
       );
-      // Company & Location
       docChildren.push(
         new Paragraph({
           spacing: { after: 60 },
@@ -1235,7 +2021,6 @@ function downloadDocx() {
         })
       );
 
-      // Bullets
       const allBullets = [...splitIntoBullets(exp.responsibilities), ...splitIntoBullets(exp.achievements)];
       allBullets.forEach(b => {
         docChildren.push(
@@ -1251,9 +2036,10 @@ function downloadDocx() {
     });
   }
 
-  // 6. Projects
-  if (projects.length > 0) {
-    addSectionHeading('Key Technical Projects');
+  // Helper 4: Projects Section
+  function buildProjectsSection(title) {
+    if (projects.length === 0) return;
+    addSectionHeading(title);
     projects.forEach(proj => {
       docChildren.push(
         new Paragraph({
@@ -1280,9 +2066,10 @@ function downloadDocx() {
     });
   }
 
-  // 7. Certifications & Awards
-  if (certifications.certs || certifications.awards || certifications.hackathons || certifications.publications) {
-    addSectionHeading('Awards & Certifications');
+  // Helper 5: Certifications Section
+  function buildCertificationsSection(title) {
+    if (!certifications.certs && !certifications.awards && !certifications.hackathons && !certifications.publications) return;
+    addSectionHeading(title);
     const items = [];
     if (certifications.certs) certifications.certs.split('\n').filter(Boolean).forEach(c => items.push(`Certification: ${c.trim()}`));
     if (certifications.awards) certifications.awards.split('\n').filter(Boolean).forEach(a => items.push(`Award: ${a.trim()}`));
@@ -1302,9 +2089,10 @@ function downloadDocx() {
     });
   }
 
-  // 8. Education
-  if (education.length > 0) {
-    addSectionHeading('Education');
+  // Helper 6: Education Section (with Coursework for Student ATS)
+  function buildEducationSection(title) {
+    if (education.length === 0) return;
+    addSectionHeading(title);
     education.forEach(edu => {
       const yearRange = [edu.startYear, edu.endYear].filter(Boolean).join(' – ');
       docChildren.push(
@@ -1318,14 +2106,56 @@ function downloadDocx() {
       );
       docChildren.push(
         new Paragraph({
-          spacing: { after: 60 },
+          spacing: { after: edu.coursework ? 30 : 60 },
           children: [
             new TextRun({ text: edu.college || 'University', italics: true, size: 20, font: font }),
             new TextRun({ text: edu.cgpa ? ` | GPA: ${edu.cgpa}` : '', italics: true, size: 19, font: font })
           ]
         })
       );
+      if (edu.coursework) {
+        docChildren.push(
+          new Paragraph({
+            spacing: { after: 60 },
+            children: [
+              new TextRun({ text: 'Relevant Coursework: ', bold: true, size: 19, font: font }),
+              new TextRun({ text: edu.coursework, size: 19, font: font })
+            ]
+          })
+        );
+      }
     });
+  }
+
+  // Assemble DOCX Sections strictly ordered by Track (Student vs Experienced)
+  if (AppState.resumeMode === 'student') {
+    // 🎓 Student ATS Order:
+    // 1. Career Objective
+    buildSummarySection('Career Objective');
+    // 2. Education & Relevant Coursework (Priority for Students!)
+    buildEducationSection('Education & Relevant Coursework');
+    // 3. Technical Skills & Competencies
+    buildSkillsSection('Technical Skills & Competencies');
+    // 4. Academic & Technical Projects (Priority!)
+    buildProjectsSection('Technical & Academic Projects');
+    // 5. Internships & Work Experience (if any)
+    buildExperienceSection('Internships & Work Experience');
+    // 6. Honors, Certifications & Hackathons
+    buildCertificationsSection('Honors, Certifications & Hackathons');
+  } else {
+    // 💼 Experienced Industry ATS Order:
+    // 1. Professional Summary
+    buildSummarySection('Professional Summary');
+    // 2. Core Competencies & Technical Skills
+    buildSkillsSection('Core Competencies & Technical Skills');
+    // 3. Professional Experience (Quantifiable impact first)
+    buildExperienceSection('Professional Experience');
+    // 4. Key Technical Projects
+    buildProjectsSection('Key Technical Projects');
+    // 5. Awards & Certifications
+    buildCertificationsSection('Awards & Certifications');
+    // 6. Education (At the bottom)
+    buildEducationSection('Education');
   }
 
   // Construct Document with 12.7mm (720 dxa) margins
